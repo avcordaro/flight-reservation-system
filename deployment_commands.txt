@@ -1,0 +1,13 @@
+Setting up Heroku remotes (using Heroku CLI):
+
+heroku git:remote -a flight-reservation-system --remote heroku-react
+heroku git:remote -a flight-reservation-system-api --remote heroku-spring
+
+
+Pushing to Heroku (must be from root):
+
+#Frontend
+git subtree push --prefix frs-react-app heroku-react master
+
+#Backend
+git subtree push --prefix frs-springboot-rest-api heroku-spring master
