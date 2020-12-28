@@ -6,6 +6,5 @@ import server_api.model.Account;
 
 public interface AccountRepository extends CrudRepository<Account, Integer> {
 
-	List<Account> findByUsername(String username);
-
+	List<Account> findByEmail(String email);
 }

@@ -32,11 +32,9 @@ public class Booking {
 	
 	private String phone;
 	
-	private String email;
-	
 	private int age;
 	
-	private String seatNumber;
+	private int seatNumber;
 
 	public Integer getId() {
 		return id;
@@ -54,8 +52,8 @@ public class Booking {
 		this.account = account;
 	}
 	
-	public String getAccountUsername() {
-		return account.getUsername();
+	public String getAccountEmail() {
+		return account.getEmail();
 	}
 
 	public Flight getFlight() {
@@ -94,14 +92,6 @@ public class Booking {
 		this.phone = phone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public int getAge() {
 		return age;
 	}
@@ -110,11 +100,11 @@ public class Booking {
 		this.age = age;
 	}
 
-	public String getSeatNumber() {
+	public int getSeatNumber() {
 		return seatNumber;
 	}
 
-	public void setSeatNumber(String seatNumber) {
+	public void setSeatNumber(int seatNumber) {
 		this.seatNumber = seatNumber;
 	}
 }

@@ -1,9 +1,11 @@
 package server_api.controller;
 
+import server_api.repository.BookingRepository;
 import server_api.repository.FlightRepository;
 import server_api.model.Flight;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FlightController {
 	@Autowired
 	private FlightRepository flightRepository;
-
+	@Autowired
+	private BookingRepository bookingRepository;
+	
 	@PostMapping(path = "/create")
 	public @ResponseBody String createFlight(@RequestParam String code, @RequestParam String date, 
 			@RequestParam String source, @RequestParam String destination, 
@@ -34,8 +38,8 @@ public class FlightController {
 		f.setDate(Date.valueOf(date));
 		f.setSource(source);
 		f.setDestination(destination);
-		f.setDeparture(departure);
-		f.setArrival(arrival);
+		f.setDeparture(Time.valueOf(departure));
+		f.setArrival(Time.valueOf(arrival));
 		flightRepository.save(f);
 		return "New flight saved";
 	}
@@ -45,7 +49,23 @@ public class FlightController {
 		
 		return flightRepository.findAll();
 	}
+	
+	@GetMapping(path = "/all-chronological")
+	public @ResponseBody Iterable<Flight> allFlightsChronological() {
+		
+		return flightRepository.findAllByOrderByDateAscDepartureAsc();
+	}
 
+	@GetMapping(path = "/occupied-seats")
+	public @ResponseBody Object[] findOccupiedSeatsForFlight(@RequestParam String code) {
+		
+		List<Flight> flight = flightRepository.findByCode(code);
+		if(flight.isEmpty()) {
+			return new Object[0];
+		}
+		return bookingRepository.findOccupiedSeatsByFlight(flight.get(0));
+	}
+	
 	@GetMapping(path = "/find")
 	public @ResponseBody List<Flight> findFlight(@RequestParam String code) {
 		

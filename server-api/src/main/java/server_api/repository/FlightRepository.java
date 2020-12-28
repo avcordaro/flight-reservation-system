@@ -9,4 +9,6 @@ import server_api.model.Flight;
 public interface FlightRepository extends CrudRepository<Flight, Integer> {
 	
 	List<Flight> findByCode(String code);
+	
+	List<Flight> findAllByOrderByDateAscDepartureAsc();
 }

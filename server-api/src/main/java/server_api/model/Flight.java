@@ -1,6 +1,7 @@
 package server_api.model;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,9 +23,9 @@ public class Flight {
 	
 	private String destination;
 	
-	private String departure;
+	private Time departure;
 
-	private String arrival;
+	private Time arrival;
 	
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -62,19 +63,19 @@ public class Flight {
 		this.destination = destination;
 	}
 
-	public String getDeparture() {
+	public Time getDeparture() {
 		return departure;
 	}
 
-	public void setDeparture(String departure) {
+	public void setDeparture(Time departure) {
 		this.departure = departure;
 	}
 
-	public String getArrival() {
+	public Time getArrival() {
 		return arrival;
 	}
 
-	public void setArrival(String arrival) {
+	public void setArrival(Time arrival) {
 		this.arrival = arrival;
 	}
 	

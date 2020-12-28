@@ -21,13 +21,15 @@ public class AccountController {
 	private AccountRepository accountRepository;
 
 	@PostMapping(path = "/create")
-	public @ResponseBody String createAccount(@RequestParam String username, @RequestParam String password, @RequestParam(defaultValue = "false") String admin) {
+	public @ResponseBody String createAccount(@RequestParam String email, @RequestParam String fullname, 
+			@RequestParam String password, @RequestParam(defaultValue = "false") String admin) {
 		
-		if(!accountRepository.findByUsername(username).isEmpty()) {
-			return "Username already taken";
+		if(!accountRepository.findByEmail(email).isEmpty()) {
+			return "Email already in use";
 		}
 		Account a = new Account();
-		a.setUsername(username);
+		a.setFullname(fullname);
+		a.setEmail(email);
 		a.setPassword(password);
 		a.setAdmin(Boolean.parseBoolean(admin));
 		accountRepository.save(a);
@@ -37,13 +39,13 @@ public class AccountController {
 	@GetMapping(path = "/find")
 	public @ResponseBody List<Account> findAccount(@RequestParam String username) {
 		
-		return accountRepository.findByUsername(username);
+		return accountRepository.findByEmail(username);
 	}
 	
 	@DeleteMapping(path = "/delete")
 	public @ResponseBody String deleteAccount(@RequestParam String username) {
 		
-		List<Account> acc_list = accountRepository.findByUsername(username);
+		List<Account> acc_list = accountRepository.findByEmail(username);
 		if(acc_list.isEmpty()) {
 			return "Account does not exist";
 		}

@@ -19,8 +19,10 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	private String fullname;
+	
 	@Column(unique=true)
-	private String username;
+	private String email;
 	
 	private String password;
 	
@@ -38,12 +40,20 @@ public class Account {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getFullname() {
+		return fullname;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -54,14 +64,14 @@ public class Account {
 		this.password = password;
 	}
 
-	public boolean getAdmin() {
+	public boolean isAdmin() {
 		return admin;
 	}
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
+
 	public Set<Booking> getBookings() {
 		return bookings;
 	}

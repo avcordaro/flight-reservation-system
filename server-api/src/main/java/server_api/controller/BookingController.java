@@ -4,9 +4,11 @@ import server_api.repository.BookingRepository;
 import server_api.repository.FlightRepository;
 import server_api.repository.AccountRepository;
 import server_api.model.Booking;
+import server_api.model.BookingWithFlight;
 import server_api.model.Flight;
 import server_api.model.Account;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +34,12 @@ public class BookingController {
 	private AccountRepository accountRepository;
 	
 	@PostMapping(path = "/create")
-	public @ResponseBody String createBooking(@RequestParam String flightCode, @RequestParam String username, 
-			@RequestParam String firstname, @RequestParam String lastname, 
-			@RequestParam String phone, @RequestParam String email,
+	public @ResponseBody String createBooking(@RequestParam String flightCode, @RequestParam String email, 
+			@RequestParam String firstname, @RequestParam String lastname, @RequestParam String phone, 
 			@RequestParam String age, @RequestParam String seatNumber) {
 		
 		List<Flight> flight = flightRepository.findByCode(flightCode);
-		List<Account> account = accountRepository.findByUsername(username);
+		List<Account> account = accountRepository.findByEmail(email);
 
 		if(flight.isEmpty()) {
 			return "Flight does not exist";
@@ -47,7 +48,7 @@ public class BookingController {
 			return "Account does not exist";
 		}
 
-		List<Booking> booking = bookingRepository.findByFlightAndSeatNumber(flight.get(0), seatNumber);
+		List<Booking> booking = bookingRepository.findByFlightAndSeatNumber(flight.get(0), Integer.parseInt(seatNumber));
 		if(!booking.isEmpty()) {
 			return "Seat already taken";
 		}
@@ -58,9 +59,8 @@ public class BookingController {
 		b.setFirstname(firstname);
 		b.setLastname(lastname);
 		b.setPhone(phone);
-		b.setEmail(email);
 		b.setAge(Integer.parseInt(age));
-		b.setSeatNumber(seatNumber);
+		b.setSeatNumber(Integer.parseInt(seatNumber));
 		bookingRepository.save(b);
 		return "New booking saved";
 	}
@@ -72,17 +72,44 @@ public class BookingController {
 	}
 	
 	@GetMapping(path = "/find")
-	public @ResponseBody List<Booking> findByAccount(@RequestParam String username) {
+	public @ResponseBody List<Booking> findBooking(@RequestParam String email, @RequestParam String flightCode) {
 		
-		List<Account> account = accountRepository.findByUsername(username);
+		List<Flight> flight = flightRepository.findByCode(flightCode);
+		List<Account> account = accountRepository.findByEmail(email);
+
+		if(flight.isEmpty()) {
+			return new ArrayList<Booking>();
+		}
+		if(account.isEmpty()) {
+			return new ArrayList<Booking>();
+		}
+		
+		return bookingRepository.findByAccountAndFlight(account.get(0), flight.get(0));
+	}
+	
+	@GetMapping(path = "/find-by-account")
+	public @ResponseBody List<BookingWithFlight> findByAccount(@RequestParam String email) {
+		
+		List<Account> account = accountRepository.findByEmail(email);
 		
 		if(account.isEmpty()) {
-			return null;
+			return new ArrayList<BookingWithFlight>();
 		}
 		
 		return bookingRepository.findByAccount(account.get(0));
 	}
 
+	@GetMapping(path = "/find-by-flight")
+	public @ResponseBody List<Booking> findByFlight(@RequestParam String flightCode) {
+		
+		List<Flight> flight = flightRepository.findByCode(flightCode);
+		
+		if(flight.isEmpty()) {
+			return new ArrayList<Booking>();
+		}
+		
+		return bookingRepository.findByFlight(flight.get(0));
+	}
 	
 	@DeleteMapping(path = "/delete")
 	public @ResponseBody String deleteBooking(@RequestParam String id) {
@@ -93,7 +120,5 @@ public class BookingController {
 		}
 		bookingRepository.delete(booking.get());
 		return "Booking deleted";
-		
-
 	}
 }
