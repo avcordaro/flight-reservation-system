@@ -10,4 +10,10 @@ Pushing to Heroku (must be from root):
 git subtree push --prefix client-app heroku-react master
 
 #Backend
-git subtree push --prefix sever-api heroku-spring master
+git subtree push --prefix server-api heroku-spring master
+
+
+Resetting Heroku Repo (if conflict problems occur):
+
+heroku repo:reset -a flight-reservation-system
+heroku repo:reset -a flight-reservation-system-api
