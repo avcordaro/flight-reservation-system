@@ -7,7 +7,7 @@ heroku git:remote -a flight-reservation-system-api --remote heroku-spring
 Pushing to Heroku (must be from root):
 
 #Frontend
-git subtree push --prefix frs-react-app heroku-react master
+git subtree push --prefix client-app heroku-react master
 
 #Backend
-git subtree push --prefix frs-springboot-rest-api heroku-spring master
+git subtree push --prefix sever-api heroku-spring master
