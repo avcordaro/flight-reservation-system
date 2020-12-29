@@ -37,15 +37,15 @@ public class AccountController {
 	}
 
 	@GetMapping(path = "/find")
-	public @ResponseBody List<Account> findAccount(@RequestParam String username) {
+	public @ResponseBody List<Account> findAccount(@RequestParam String email) {
 		
-		return accountRepository.findByEmail(username);
+		return accountRepository.findByEmail(email);
 	}
 	
 	@DeleteMapping(path = "/delete")
-	public @ResponseBody String deleteAccount(@RequestParam String username) {
+	public @ResponseBody String deleteAccount(@RequestParam String email) {
 		
-		List<Account> acc_list = accountRepository.findByEmail(username);
+		List<Account> acc_list = accountRepository.findByEmail(email);
 		if(acc_list.isEmpty()) {
 			return "Account does not exist";
 		}

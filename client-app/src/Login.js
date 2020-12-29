@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -10,26 +12,24 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {email: '', password: ''};
-
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleEmailChange(event) {
-        this.setState({email: event.target.value});
-    }
+    handleSubmit(values, { setFieldError }) {
+        fetch(`https://flight-reservation-system-api.herokuapp.com/account/find?email=${values.email}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.length === 0) {
+                    setFieldError("email", "Incorrect email address.");
+                } else if(data[0].password !== values.password) {
+                    setFieldError("password", "Incorrect password.");
+                } else if(data[0].admin) {
+                    this.props.history.push("/admin"); 
+                } else{
+                    this.props.history.push("/my-account"); 
+                }
+            });
 
-    handlePasswordChange(event) {
-        this.setState({password: event.target.value});
-    }
-
-    handleLogin(event) {
-        event.preventDefault();
-        console.log("Email: " + this.state.email);
-        console.log("Password: " + this.state.password);
-        this.props.history.push("/");    
     }
 
     render() { 
@@ -46,28 +46,65 @@ class Login extends Component {
                     </h5>
                 </Row>
                 <Row className="justify-content-center">
-                    <Col lg={4}>
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" value={this.state.email} onChange={this.handleEmailChange}/>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
-                            </Form.Group>
-                        </Form>
+                    <Col>
+                        <Formik
+                            validationSchema={yup.object({
+                                email: yup.string().email("Invalid email address.").required("Email required."),
+                                password: yup.string().required("Password required.")
+                            })}
+                            validateOnChange={false}
+                            onSubmit={this.handleSubmit}
+                            initialValues={{
+                                email: '',
+                                password: ''
+                            }}
+                        >
+                            {({
+                            handleSubmit,
+                            handleChange,
+                            values,
+                            isSubmitting,
+                            errors,
+                            }) => (
+                                <Form noValidate onSubmit={handleSubmit}>
+                                    <Form.Row className="justify-content-center">
+                                        <Form.Group as={Col} lg="4">
+                                            <Form.Label>Email</Form.Label>
+                                            <Form.Control
+                                            id ="email"
+                                            name="email"
+                                            type="email"
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            isInvalid={errors.email}
+                                            />
+                                            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Form.Row>
+                                    <Form.Row className="justify-content-center">
+                                        <Form.Group as={Col} lg="4">
+                                            <Form.Label>Password</Form.Label>
+                                            <Form.Control
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            isInvalid={errors.password}
+                                            />
+                                            <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                                        </Form.Group>
+                                    </Form.Row>
+                                    <Form.Row className="justify-content-center">
+                                        <Link to={'/register'}>
+                                            <Button variant="primary" className="mt-3 mx-2">Register</Button>
+                                        </Link>
+                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>Login</Button>
+                                    </Form.Row>
+                                </Form>
+                            )}
+                        </Formik>
                     </Col>
-                </Row>
-                <Row className="justify-content-center">
-                    <Link to={'/register'}>
-                        <Button variant="primary" className="mt-3 mx-2">
-                            Register
-                        </Button>
-                    </Link>
-                    <Button variant="primary" type="submit" onClick={this.handleLogin} className="mt-3 mx-2">
-                        Login
-                    </Button>
                 </Row>
             </Container>
         );
