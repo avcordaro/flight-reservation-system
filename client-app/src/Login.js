@@ -26,9 +26,9 @@ class Login extends Component {
                     setFieldError("password", "Incorrect password.");
                     setSubmitting(false);
                 } else if(data[0].admin) {
-                    this.props.history.push("/admin"); 
-                } else{
-                    this.props.history.push("/my-account"); 
+                    this.props.history.push("/admin", { adminEmail: data[0].email }); 
+                } else {
+                    this.props.history.push('/my-account', { custName: data[0].fullname, custEmail: data[0].email });
                 }
             });
 

@@ -31,7 +31,7 @@ class FlightListItem extends Component {
                                         <i>Date:<br/>Depature:<br/>Arrival:</i>
                                     </Card.Text>
                                     <Card.Text className="float-left ml-5">
-                                        {new Date(flight.date).toDateString()}<br/>{flight.departure}<br/>{flight.arrival}
+                                        {new Date(flight.date).toDateString()}<br/>{flight.departure.substr(0, 5) + " GMT"}<br/>{flight.arrival.substr(0, 5) + " Local time"}
                                     </Card.Text>
                                 </Col>
                             </Row>
@@ -40,7 +40,7 @@ class FlightListItem extends Component {
                             {this.listType === "admin" &&
                                 <div>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                                    <Button variant="primary" className="float-right mr-1"><FaTimes/></Button>
+                                    <Button variant="primary" className="float-right mr-1" onClick={() => this.props.onDelete(flight.code)}><FaTimes/></Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
                                     <Button variant="primary" className="float-right mr-1"><FaPencilAlt/></Button>
