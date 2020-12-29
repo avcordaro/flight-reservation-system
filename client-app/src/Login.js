@@ -15,14 +15,16 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit(values, { setFieldError }) {
+    handleSubmit(values, { setFieldError, setSubmitting }) {
         fetch(`https://flight-reservation-system-api.herokuapp.com/account/find?email=${values.email}`)
             .then(response => response.json())
             .then(data => {
                 if(data.length === 0) {
                     setFieldError("email", "Incorrect email address.");
+                    setSubmitting(false);
                 } else if(data[0].password !== values.password) {
                     setFieldError("password", "Incorrect password.");
+                    setSubmitting(false);
                 } else if(data[0].admin) {
                     this.props.history.push("/admin"); 
                 } else{

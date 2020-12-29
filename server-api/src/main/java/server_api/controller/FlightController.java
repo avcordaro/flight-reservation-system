@@ -28,6 +28,7 @@ public class FlightController {
 	@PostMapping(path = "/create")
 	public @ResponseBody String createFlight(@RequestParam String code, @RequestParam String date, 
 			@RequestParam String source, @RequestParam String destination, 
+			@RequestParam String srcCity, @RequestParam String destCity, 
 			@RequestParam String departure, @RequestParam String arrival) {
 		
 		if(!flightRepository.findByCode(code).isEmpty()) {
@@ -38,6 +39,8 @@ public class FlightController {
 		f.setDate(Date.valueOf(date));
 		f.setSource(source);
 		f.setDestination(destination);
+		f.setSrcCity(srcCity);
+		f.setDestCity(destCity);
 		f.setDeparture(Time.valueOf(departure));
 		f.setArrival(Time.valueOf(arrival));
 		flightRepository.save(f);

@@ -28,7 +28,6 @@ class Register extends Component {
                 if(data === "Email already in use") {
                     setFieldError("email", "Email already in use.");
                 } else{
-                    console.log(data);
                     this.props.history.push("/my-account"); 
                 }
             });

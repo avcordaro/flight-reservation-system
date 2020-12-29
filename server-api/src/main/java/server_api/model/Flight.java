@@ -22,6 +22,10 @@ public class Flight {
 	private String source;
 	
 	private String destination;
+
+	private String srcCity;
+	
+	private String destCity;
 	
 	private Time departure;
 
@@ -63,6 +67,21 @@ public class Flight {
 		this.destination = destination;
 	}
 
+	public String getSrcCity() {
+		return srcCity;
+	}
+
+	public void setSrcCity(String srcCity) {
+		this.srcCity = srcCity;
+	}
+
+	public String getDestCity() {
+		return destCity;
+	}
+
+	public void setDestCity(String destCity) {
+		this.destCity = destCity;
+	}
 	public Time getDeparture() {
 		return departure;
 	}
