@@ -7,25 +7,30 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 import { BiLogInCircle } from 'react-icons/bi';
 
 class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {loading: false};
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit(values, { setFieldError, setSubmitting }) {
+        this.setState({loading: true});
         fetch(`https://flight-reservation-system-api.herokuapp.com/account/find?email=${values.email}`)
             .then(response => response.json())
             .then(data => {
                 if(data.length === 0) {
                     setFieldError("email", "Incorrect email address.");
                     setSubmitting(false);
+                    this.setState({loading: false});
                 } else if(data[0].password !== values.password) {
                     setFieldError("password", "Incorrect password.");
                     setSubmitting(false);
+                    this.setState({loading: false});
                 } else if(data[0].admin) {
                     this.props.history.push("/admin", { adminEmail: data[0].email }); 
                 } else {
@@ -102,7 +107,9 @@ class Login extends Component {
                                         <Link to={'/register'}>
                                             <Button variant="primary" className="mt-3 mx-2">Register</Button>
                                         </Link>
-                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>Login</Button>
+                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>
+                                            Login {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                        </Button>
                                     </Form.Row>
                                 </Form>
                             )}

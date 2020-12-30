@@ -7,15 +7,18 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 
 class Register extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {loading: false};
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit(values, { setFieldError }) {
+    handleSubmit(values, { setFieldError, setSubmitting }) {
+        this.setState({loading: true});
         fetch(`https://flight-reservation-system-api.herokuapp.com/account/create?fullname=${values.name}&email=${values.email}&password=${values.password}`,
             {
                 method: 'POST',
@@ -27,6 +30,8 @@ class Register extends Component {
             .then(data => {
                 if(data === "Email already in use") {
                     setFieldError("email", "Email already in use.");
+                    setSubmitting(false);
+                    this.setState({loading: false});
                 } else{
                     this.props.history.push("/my-account"); 
                 }
@@ -112,7 +117,9 @@ class Register extends Component {
                                         <Link to={'/login'}>
                                             <Button variant="primary" className="mt-3 mx-2">Cancel</Button>
                                         </Link>
-                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>Create</Button>
+                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>
+                                            Create {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                        </Button>
                                     </Form.Row>
                                 </Form>
                             )}
