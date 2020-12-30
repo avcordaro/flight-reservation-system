@@ -12,6 +12,13 @@ class FlightList extends Component {
     handleFlightDeletion(flight_code) {
         let updatedFlights = this.state.flights.filter((flight) => flight.code !== flight_code);
         this.setState({flights: updatedFlights});
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/delete?code=${flight_code}`, 
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+        });
     }
 
     componentDidMount() {
