@@ -7,6 +7,7 @@ import Alert from 'react-bootstrap/Alert';
 import FlightList from './FlightList.js';
 import BookingList from './BookingList.js';
 import { IoMdExit } from 'react-icons/io';
+import FadeIn from 'react-fade-in';
 
 class CustomerDashboard extends Component {
 
@@ -17,6 +18,7 @@ class CustomerDashboard extends Component {
 
     render() { 
         return (
+            <FadeIn transitionDuration="750">
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
@@ -39,6 +41,7 @@ class CustomerDashboard extends Component {
                         </Tabs>
                     </Container>
                 </div>
+            </FadeIn>
         );
     }
 }

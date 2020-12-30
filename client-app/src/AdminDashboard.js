@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import FlightList from './FlightList.js';
 import { IoMdExit } from 'react-icons/io';
 import { FaPlus } from 'react-icons/fa';
+import FadeIn from 'react-fade-in';
 
 class AdminDashboard extends Component {
 
@@ -16,6 +17,7 @@ class AdminDashboard extends Component {
 
     render() { 
         return (
+            <FadeIn transitionDuration="750">
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
@@ -36,6 +38,7 @@ class AdminDashboard extends Component {
                         <FlightList type="admin"/>
                     </Container>
                 </div>
+            </FadeIn>
         );
     }
 }

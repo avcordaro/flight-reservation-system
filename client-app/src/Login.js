@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 import { BiLogInCircle } from 'react-icons/bi';
+import FadeIn from 'react-fade-in';
 
 class Login extends Component {
 
@@ -42,81 +43,83 @@ class Login extends Component {
 
     render() { 
         return (
-            <Container className="p-5" style={{ width: '45rem' }}>
-                <Row className="justify-content-center mb-2">
-                    <h2>
-                        Welcome to Foobar Airways
-                    </h2>
-                </Row>
-                <Row className="justify-content-center mb-5">
-                    <h5>
-                        Please login to continue <BiLogInCircle/>
-                    </h5>
-                </Row>
-                <Row className="justify-content-center">
-                    <Col>
-                        <Formik
-                            validationSchema={yup.object({
-                                email: yup.string().email("Invalid email address.").required("Email required."),
-                                password: yup.string().required("Password required.")
-                            })}
-                            validateOnChange={false}
-                            onSubmit={this.handleSubmit}
-                            initialValues={{
-                                email: '',
-                                password: ''
-                            }}
-                        >
-                            {({
-                            handleSubmit,
-                            handleChange,
-                            values,
-                            isSubmitting,
-                            errors,
-                            }) => (
-                                <Form noValidate onSubmit={handleSubmit}>
-                                    <Form.Row className="justify-content-center">
-                                        <Form.Group as={Col} xs="6" sm="6">
-                                            <Form.Label>Email</Form.Label>
-                                            <Form.Control
-                                            id ="email"
-                                            name="email"
-                                            type="email"
-                                            value={values.email}
-                                            onChange={handleChange}
-                                            isInvalid={errors.email}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-center">
-                                        <Form.Group as={Col} xs="6" sm="6">
-                                            <Form.Label>Password</Form.Label>
-                                            <Form.Control
-                                            id="password"
-                                            name="password"
-                                            type="password"
-                                            value={values.password}
-                                            onChange={handleChange}
-                                            isInvalid={errors.password}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-center">
-                                        <Link to={'/register'}>
-                                            <Button variant="primary" className="mt-3 mx-2">Register</Button>
-                                        </Link>
-                                        <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>
-                                            Login {this.state.loading && <Spinner animation="border" size="sm"/>}
-                                        </Button>
-                                    </Form.Row>
-                                </Form>
-                            )}
-                        </Formik>
-                    </Col>
-                </Row>
-            </Container>
+            <FadeIn transitionDuration="750">
+                <Container className="p-5" style={{ width: '45rem' }}>
+                    <Row className="justify-content-center mb-2">
+                        <h2>
+                            Welcome to Foobar Airways
+                        </h2>
+                    </Row>
+                    <Row className="justify-content-center mb-5">
+                        <h5>
+                            Please login to continue <BiLogInCircle/>
+                        </h5>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col>
+                            <Formik
+                                validationSchema={yup.object({
+                                    email: yup.string().email("Invalid email address.").required("Email required."),
+                                    password: yup.string().required("Password required.")
+                                })}
+                                validateOnChange={false}
+                                onSubmit={this.handleSubmit}
+                                initialValues={{
+                                    email: '',
+                                    password: ''
+                                }}
+                            >
+                                {({
+                                handleSubmit,
+                                handleChange,
+                                values,
+                                isSubmitting,
+                                errors,
+                                }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
+                                        <Form.Row className="justify-content-center">
+                                            <Form.Group as={Col} xs="6" sm="6">
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control
+                                                id ="email"
+                                                name="email"
+                                                type="email"
+                                                value={values.email}
+                                                onChange={handleChange}
+                                                isInvalid={errors.email}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-center">
+                                            <Form.Group as={Col} xs="6" sm="6">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control
+                                                id="password"
+                                                name="password"
+                                                type="password"
+                                                value={values.password}
+                                                onChange={handleChange}
+                                                isInvalid={errors.password}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-center">
+                                            <Link to={'/register'}>
+                                                <Button variant="primary" className="mt-3 mx-2">Register</Button>
+                                            </Link>
+                                            <Button type="submit" className="mt-3 mx-2" disabled={isSubmitting}>
+                                                Login {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                            </Button>
+                                        </Form.Row>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Col>
+                    </Row>
+                </Container>
+            </FadeIn>
         );
     }
 }

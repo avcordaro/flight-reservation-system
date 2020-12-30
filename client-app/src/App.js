@@ -10,6 +10,17 @@ import logo from "./logo.png";
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.routes = [
+            { path: '/login', Component: Login },
+            { path: '/register', Component: Register },
+            { path: '/admin', Component: AdminDashboard },
+            { path: '/my-account', Component: CustomerDashboard },
+            { path: '/my-account/new-booking', Component: NewBooking }
+        ];  
+    }
+
     render() {
         return (
             <div>
@@ -24,11 +35,13 @@ class App extends Component {
                         <Route exact path="/">
                             <Redirect to="/login" />
                         </Route>
-                        <Route exact path='/login' component={Login} />
-                        <Route exact path='/register' component={Register} />
-                        <Route exact path='/admin' component={AdminDashboard}/>
-                        <Route exact path='/my-account' component={CustomerDashboard}/>
-                        <Route exact path='/my-account/new-booking' component={NewBooking}/>
+                        {this.routes.map(route => (
+                            <Route 
+                                exact path={route.path} 
+                                key={route.path} 
+                                component={route.Component}
+                            />
+                        ))}
                     </Switch>
                 </MemoryRouter>
             </div>

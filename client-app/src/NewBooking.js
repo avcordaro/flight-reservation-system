@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
 import { BsArrowRight } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
+import FadeIn from 'react-fade-in';
 
 class App extends Component {
 
@@ -84,140 +85,142 @@ class App extends Component {
 
     render() {
         return (
-            <Container className="p-5" style={{ width: '45rem' }}>
-                <Row className="justify-content-center mb-5">
-                    <h3>
-                        New Booking
-                    </h3>
-                </Row>
-                <hr/>
-                <Row>
-                    <Col>
-                        <h6 className="mb-3 mt-3">Flight code: {this.historyState.flightCode}</h6>
-                        <h6 className="mb-3"><FaPlaneDeparture/> {this.historyState.source} <BsArrowRight/> {this.historyState.destination} <FaPlaneArrival/></h6>
-                        <h5 className="mb-4">{this.historyState.departure.substr(0, 5)} <BsArrowRight/> {this.historyState.arrival.substr(0, 5)}</h5>
-                        <hr/>
-                        <Formik
-                            validationSchema={yup.object({
-                                firstname: yup.string().required("Forename required."),
-                                lastname: yup.string().required("Surname required."),
-                                phone: yup.string().required("Phone number required."),
-                                age: yup.number().typeError('Age must be a number.').required("Age required.").positive("Age must be positive."),
-                                seatNumber: yup.string().required("Please select your seat.")
-                            })}
-                            validateOnChange={false}
-                            onSubmit={this.handleSubmit}
-                            initialValues={{
-                                firstname: '',
-                                lastname: '',
-                                phone: '',
-                                age: '',
-                                seatNumber: ''
-                            }}
-                        >
-                            {({
-                            handleSubmit,
-                            handleChange,
-                            values,
-                            isSubmitting,
-                            errors,
-                            }) => (
-                                <Form noValidate onSubmit={handleSubmit}>
-                                    <Form.Row className="justify-content-start">
-                                        <Form.Group as={Col} xs="10" sm="10">
-                                            <Form.Label>Forename</Form.Label>
-                                            <Form.Control
-                                            id ="firstname"
-                                            name="firstname"
-                                            type="text"
-                                            value={values.firstname}
-                                            onChange={handleChange}
-                                            isInvalid={errors.firstname}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.firstname}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-start">
-                                        <Form.Group as={Col} xs="10" sm="10">
-                                            <Form.Label>Surname</Form.Label>
-                                            <Form.Control
-                                            id ="lastname"
-                                            name="lastname"
-                                            type="text"
-                                            value={values.lastname}
-                                            onChange={handleChange}
-                                            isInvalid={errors.lastname}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.lastname}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-start">
-                                        <Form.Group as={Col} xs="10" sm="10">
-                                            <Form.Label>Phone Number</Form.Label>
-                                            <Form.Control
-                                            id="phone"
-                                            name="phone"
-                                            type="text"
-                                            value={values.phone}
-                                            onChange={handleChange}
-                                            isInvalid={errors.phone}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-start">
-                                        <Form.Group as={Col} xs="6" sm="6">
-                                            <Form.Label>Age</Form.Label>
-                                            <Form.Control
-                                            id="age"
-                                            name="age"
-                                            type="text"
-                                            value={values.age}
-                                            onChange={handleChange}
-                                            isInvalid={errors.age}
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.age}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-start">
-                                        <Form.Group as={Col} xs="6" sm="6">
-                                            <Form.Label>Seat Number</Form.Label>
-                                            <Form.Control
-                                            id="seatNumber"
-                                            name="seatNumber"
-                                            type="text"
-                                            value={values.seatNumber = this.state.selectedSeat}
-                                            onChange={handleChange}
-                                            isInvalid={errors.seatNumber}
-                                            readOnly
-                                            />
-                                            <Form.Control.Feedback type="invalid">{errors.seatNumber}</Form.Control.Feedback>
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row className="justify-content-start">
-                                        <Button 
-                                            variant="primary" 
-                                            className="mt-3 mx-2" 
-                                            onClick={() => 
-                                                this.props.history.push('/my-account/', this.historyState)
-                                            }
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button type="submit" className="mt-3 mx-2">
-                                            Book {this.state.loading && <Spinner animation="border" size="sm"/>}
-                                        </Button>
-                                    </Form.Row>
-                                </Form>
-                            )}
-                        </Formik>
-                    </Col>
-                    <Col sm="auto">
-                        <h5 className="mb-3 mt-3">Please select your seat...</h5>
-                        {this.state.loadSeatmap && <Seatmap rows={this.state.rows} addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat}/>}
-                    </Col>
-                </Row>
-            </Container>
+            <FadeIn transitionDuration="750">
+                <Container className="p-5" style={{ width: '45rem' }}>
+                    <Row className="justify-content-center mb-5">
+                        <h3>
+                            New Booking
+                        </h3>
+                    </Row>
+                    <hr/>
+                    <Row>
+                        <Col>
+                            <h6 className="mb-3 mt-3">Flight code: {this.historyState.flightCode}</h6>
+                            <h6 className="mb-3"><FaPlaneDeparture/> {this.historyState.source} <BsArrowRight/> {this.historyState.destination} <FaPlaneArrival/></h6>
+                            <h5 className="mb-4">{this.historyState.departure.substr(0, 5)} <BsArrowRight/> {this.historyState.arrival.substr(0, 5)}</h5>
+                            <hr/>
+                            <Formik
+                                validationSchema={yup.object({
+                                    firstname: yup.string().required("Forename required."),
+                                    lastname: yup.string().required("Surname required."),
+                                    phone: yup.string().required("Phone number required."),
+                                    age: yup.number().typeError('Age must be a number.').required("Age required.").positive("Age must be positive."),
+                                    seatNumber: yup.string().required("Please select your seat.")
+                                })}
+                                validateOnChange={false}
+                                onSubmit={this.handleSubmit}
+                                initialValues={{
+                                    firstname: '',
+                                    lastname: '',
+                                    phone: '',
+                                    age: '',
+                                    seatNumber: ''
+                                }}
+                            >
+                                {({
+                                handleSubmit,
+                                handleChange,
+                                values,
+                                isSubmitting,
+                                errors,
+                                }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
+                                        <Form.Row className="justify-content-start">
+                                            <Form.Group as={Col} xs="10" sm="10">
+                                                <Form.Label>Forename</Form.Label>
+                                                <Form.Control
+                                                id ="firstname"
+                                                name="firstname"
+                                                type="text"
+                                                value={values.firstname}
+                                                onChange={handleChange}
+                                                isInvalid={errors.firstname}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.firstname}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-start">
+                                            <Form.Group as={Col} xs="10" sm="10">
+                                                <Form.Label>Surname</Form.Label>
+                                                <Form.Control
+                                                id ="lastname"
+                                                name="lastname"
+                                                type="text"
+                                                value={values.lastname}
+                                                onChange={handleChange}
+                                                isInvalid={errors.lastname}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.lastname}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-start">
+                                            <Form.Group as={Col} xs="10" sm="10">
+                                                <Form.Label>Phone Number</Form.Label>
+                                                <Form.Control
+                                                id="phone"
+                                                name="phone"
+                                                type="text"
+                                                value={values.phone}
+                                                onChange={handleChange}
+                                                isInvalid={errors.phone}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-start">
+                                            <Form.Group as={Col} xs="6" sm="6">
+                                                <Form.Label>Age</Form.Label>
+                                                <Form.Control
+                                                id="age"
+                                                name="age"
+                                                type="text"
+                                                value={values.age}
+                                                onChange={handleChange}
+                                                isInvalid={errors.age}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.age}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-start">
+                                            <Form.Group as={Col} xs="6" sm="6">
+                                                <Form.Label>Seat Number</Form.Label>
+                                                <Form.Control
+                                                id="seatNumber"
+                                                name="seatNumber"
+                                                type="text"
+                                                value={values.seatNumber = this.state.selectedSeat}
+                                                onChange={handleChange}
+                                                isInvalid={errors.seatNumber}
+                                                readOnly
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.seatNumber}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-start">
+                                            <Button 
+                                                variant="primary" 
+                                                className="mt-3 mx-2" 
+                                                onClick={() => 
+                                                    this.props.history.push('/my-account/', this.historyState)
+                                                }
+                                            >
+                                                Cancel
+                                            </Button>
+                                            <Button type="submit" className="mt-3 mx-2">
+                                                Book {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                            </Button>
+                                        </Form.Row>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Col>
+                        <Col sm="auto">
+                            <h5 className="mb-3 mt-3">Please select your seat...</h5>
+                            {this.state.loadSeatmap && <Seatmap rows={this.state.rows} addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat}/>}
+                        </Col>
+                    </Row>
+                </Container>
+            </FadeIn>
         );
     }
 }
