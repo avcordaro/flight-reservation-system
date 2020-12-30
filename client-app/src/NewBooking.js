@@ -65,7 +65,7 @@ class App extends Component {
             .then(response => response.text())
             .then(data => {
                 this.props.history.push('/my-account', this.historyState)
-            });
+        });
     }
 
     handleAddSeat(row, number) {

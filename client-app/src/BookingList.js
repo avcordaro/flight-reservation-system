@@ -12,6 +12,13 @@ class BookingList extends Component {
     handleBookingDeletion(booking_id) {
         let updatedBookings = this.state.bookings.filter((booking) => booking.id !== booking_id);
         this.setState({bookings: updatedBookings});
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/delete?id=${booking_id}`, 
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+        });
     }
 
     componentDidMount() {
