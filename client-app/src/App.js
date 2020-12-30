@@ -5,8 +5,8 @@ import Login from './Login.js';
 import Register from './Register.js';
 import CustomerDashboard from './CustomerDashboard.js';
 import AdminDashboard from './AdminDashboard.js';
+import NewBooking from './NewBooking.js';
 import logo from "./logo.png";
-import './App.css';
 
 class App extends Component {
 
@@ -26,9 +26,9 @@ class App extends Component {
                         </Route>
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/register' component={Register} />
-                        <Route exact path='/my-account' component={CustomerDashboard}/>
                         <Route exact path='/admin' component={AdminDashboard}/>
-
+                        <Route exact path='/my-account' component={CustomerDashboard}/>
+                        <Route exact path='/my-account/new-booking' component={NewBooking}/>
                     </Switch>
                 </MemoryRouter>
             </div>

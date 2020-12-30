@@ -42,7 +42,7 @@ class Login extends Component {
 
     render() { 
         return (
-            <Container className="p-5">
+            <Container className="p-5" style={{ width: '45rem' }}>
                 <Row className="justify-content-center mb-2">
                     <h2>
                         Welcome to Foobar Airways
@@ -76,7 +76,7 @@ class Login extends Component {
                             }) => (
                                 <Form noValidate onSubmit={handleSubmit}>
                                     <Form.Row className="justify-content-center">
-                                        <Form.Group as={Col} lg="4">
+                                        <Form.Group as={Col} xs="6" sm="6">
                                             <Form.Label>Email</Form.Label>
                                             <Form.Control
                                             id ="email"
@@ -90,7 +90,7 @@ class Login extends Component {
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row className="justify-content-center">
-                                        <Form.Group as={Col} lg="4">
+                                        <Form.Group as={Col} xs="6" sm="6">
                                             <Form.Label>Password</Form.Label>
                                             <Form.Control
                                             id="password"

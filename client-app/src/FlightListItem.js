@@ -7,12 +7,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Modal from 'react-bootstrap/Modal';
 import { FaTimes, FaPencilAlt, FaUsers, FaPlus, FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
+import { BsArrowRight } from 'react-icons/bs';
 
 class FlightListItem extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {showModal: false}
+        this.state = {showModal: false};
     }
 
     render() {
@@ -23,8 +24,8 @@ class FlightListItem extends Component {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <Card.Title>{flight.srcCity} &#8594; {flight.destCity}</Card.Title>
-                            <Card.Subtitle className="text-muted"><FaPlaneDeparture/> {flight.source} &#8594; {flight.destination} <FaPlaneArrival/></Card.Subtitle>
+                            <Card.Title>{flight.srcCity} <BsArrowRight/> {flight.destCity}</Card.Title>
+                            <Card.Subtitle className="text-muted"><FaPlaneDeparture/> {flight.source} <BsArrowRight/> {flight.destination} <FaPlaneArrival/></Card.Subtitle>
                             <hr/>
                             <Row>
                                 <Col sm="auto">
@@ -53,7 +54,22 @@ class FlightListItem extends Component {
                             }
                             {this.props.type === "customer" &&
                                 <div>
-                                    <Button variant="primary" className="float-right mr-2">Book&nbsp;&nbsp;&nbsp;<FaPlus/></Button>
+                                    <Button 
+                                        variant="primary" 
+                                        className="float-right mr-2" 
+                                        onClick={() => 
+                                            this.props.history.push('/my-account/new-booking', {
+                                                flightCode: flight.code, 
+                                                source: flight.source,
+                                                destination: flight.destination,
+                                                departure: flight.departure,
+                                                arrival: flight.arrival,
+                                                custName: this.props.custName, 
+                                                custEmail: this.props.custEmail
+                                            })}
+                                    >
+                                        Book&nbsp;&nbsp;&nbsp;<FaPlus/>
+                                    </Button>
                                 </div>
                             }
                         </Col>

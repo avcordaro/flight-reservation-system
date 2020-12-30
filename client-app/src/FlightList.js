@@ -26,7 +26,15 @@ class FlightList extends Component {
         return (
             <div className="mt-3">
                 {this.state.flights.map((flight) =>
-                    <FlightListItem key={flight.code} type={this.props.type} flight={flight} custEmail={this.props.custEmail} onDelete={this.handleFlightDeletion}/>
+                    <FlightListItem 
+                        key={flight.code} 
+                        type={this.props.type} 
+                        flight={flight} 
+                        custName={this.props.custName}
+                        custEmail={this.props.custEmail} 
+                        onDelete={this.handleFlightDeletion}
+                        history={this.props.history}
+                    />
                 )}
             </div>
         );

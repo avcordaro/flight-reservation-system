@@ -7,6 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Modal from 'react-bootstrap/Modal';
 import { FaTimes, FaPencilAlt, FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
+import { BsArrowRight } from 'react-icons/bs';
 
 class BookingListItem extends Component {
 
@@ -23,8 +24,8 @@ class BookingListItem extends Component {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <Card.Title>{booking.srcCity} &#8594; {booking.destCity}</Card.Title>
-                            <Card.Subtitle className="text-muted"><FaPlaneDeparture/> {booking.source} &#8594; {booking.destination} <FaPlaneArrival/></Card.Subtitle>
+                            <Card.Title>{booking.srcCity} <BsArrowRight/> {booking.destCity}</Card.Title>
+                            <Card.Subtitle className="text-muted"><FaPlaneDeparture/> {booking.source} <BsArrowRight/> {booking.destination} <FaPlaneArrival/></Card.Subtitle>
                             <hr/>
                             <Row>
                                 <Col sm="auto">

@@ -15,7 +15,7 @@ class BookingList extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8080/booking/find-by-account?email=${this.props.custEmail}`)
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/find-by-account?email=${this.props.custEmail}`)
             .then(response => response.json())
             .then(data => {
                 this.setState({bookings: data});

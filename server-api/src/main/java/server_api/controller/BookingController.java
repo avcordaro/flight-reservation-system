@@ -115,7 +115,7 @@ public class BookingController {
 	public @ResponseBody String deleteBooking(@RequestParam String id) {
 		
 		Optional<Booking> booking = bookingRepository.findById(Integer.parseInt(id));
-		if(booking.isPresent()) {
+		if(!booking.isPresent()) {
 			return "Booking does not exist";
 		}
 		bookingRepository.delete(booking.get());

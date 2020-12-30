@@ -31,7 +31,7 @@ class CustomerDashboard extends Component {
                         <hr/>
                         <Tabs defaultActiveKey="flights">
                             <Tab eventKey="flights" title="Flights">
-                                <FlightList type="customer" custEmail={this.state.custEmail}/>
+                                <FlightList type="customer" custName={this.state.custName} custEmail={this.state.custEmail} history={this.props.history}/>
                             </Tab>
                             <Tab eventKey="bookings" title="My Bookings">
                                 <BookingList custEmail={this.state.custEmail}/>
