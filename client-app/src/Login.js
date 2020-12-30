@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { BiLogInCircle } from 'react-icons/bi';
 
 class Login extends Component {
 
@@ -44,7 +45,7 @@ class Login extends Component {
                 </Row>
                 <Row className="justify-content-center mb-5">
                     <h5>
-                        Please login to continue
+                        Please login to continue <BiLogInCircle/>
                     </h5>
                 </Row>
                 <Row className="justify-content-center">

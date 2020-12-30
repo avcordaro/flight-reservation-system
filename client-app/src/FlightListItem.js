@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Modal from 'react-bootstrap/Modal';
 import { FaTimes, FaPencilAlt, FaUsers, FaPlus, FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
 
 class FlightListItem extends Component {
@@ -12,6 +13,7 @@ class FlightListItem extends Component {
     constructor(props) {
         super(props);
         this.listType = this.props.type;
+        this.state = {showModal: false}
     }
 
     render() {
@@ -40,7 +42,7 @@ class FlightListItem extends Component {
                             {this.listType === "admin" &&
                                 <div>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                                    <Button variant="primary" className="float-right mr-1" onClick={() => this.props.onDelete(flight.code)}><FaTimes/></Button>
+                                    <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
                                     <Button variant="primary" className="float-right mr-1"><FaPencilAlt/></Button>
@@ -58,6 +60,16 @@ class FlightListItem extends Component {
                         </Col>
                     </Row>
                 </Card.Body>
+                <Modal show={this.state.showModal} onHide={() => this.setState({showModal: false})}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Delete {this.props.flight.code}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete this flight?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setState({showModal: false})}>Cancel</Button>
+                        <Button variant="primary" onClick={() => this.props.onDelete(flight.code)}>Delete</Button>
+                    </Modal.Footer>
+                </Modal>
             </Card>
         );
     }
