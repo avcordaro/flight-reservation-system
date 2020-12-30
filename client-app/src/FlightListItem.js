@@ -12,7 +12,6 @@ class FlightListItem extends Component {
 
     constructor(props) {
         super(props);
-        this.listType = this.props.type;
         this.state = {showModal: false}
     }
 
@@ -28,18 +27,18 @@ class FlightListItem extends Component {
                             <Card.Subtitle className="text-muted"><FaPlaneDeparture/> {flight.source} &#8594; {flight.destination} <FaPlaneArrival/></Card.Subtitle>
                             <hr/>
                             <Row>
-                                <Col>
+                                <Col sm="auto">
                                     <Card.Text className="float-left">
                                         <i>Date:<br/>Depature:<br/>Arrival:</i>
                                     </Card.Text>
                                     <Card.Text className="float-left ml-5">
-                                        {new Date(flight.date).toDateString()}<br/>{flight.departure.substr(0, 5) + " GMT"}<br/>{flight.arrival.substr(0, 5) + " Local time"}
+                                        {new Date(flight.date).toDateString()}<br/>{flight.departure.substr(0, 5)}<br/>{flight.arrival.substr(0, 5)}
                                     </Card.Text>
                                 </Col>
                             </Row>
                         </Col>
-                        <Col xs lg="auto">
-                            {this.listType === "admin" &&
+                        <Col sm="auto">
+                            {this.props.type === "admin" &&
                                 <div>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
                                     <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
@@ -52,7 +51,7 @@ class FlightListItem extends Component {
                                     </OverlayTrigger>
                                 </div>
                             }
-                            {this.listType === "customer" &&
+                            {this.props.type === "customer" &&
                                 <div>
                                     <Button variant="primary" className="float-right mr-2">Book&nbsp;&nbsp;&nbsp;<FaPlus/></Button>
                                 </div>

@@ -5,6 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Alert from 'react-bootstrap/Alert';
 import FlightList from './FlightList.js';
+import BookingList from './BookingList.js';
 import { IoMdExit } from 'react-icons/io';
 
 class CustomerDashboard extends Component {
@@ -30,10 +31,10 @@ class CustomerDashboard extends Component {
                         <hr/>
                         <Tabs defaultActiveKey="flights">
                             <Tab eventKey="flights" title="Flights">
-                                <FlightList type="customer"/>
+                                <FlightList type="customer" custEmail={this.state.custEmail}/>
                             </Tab>
                             <Tab eventKey="bookings" title="My Bookings">
-                                <div></div>
+                                <BookingList custEmail={this.state.custEmail}/>
                             </Tab>
                         </Tabs>
                     </Container>

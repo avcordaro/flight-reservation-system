@@ -23,6 +23,10 @@ public interface BookingWithFlight {
 
 	public String getDestination();
 
+	public String getSrcCity();
+
+	public String getDestCity();
+
 	public Date getDate();
 
 	public Time getDeparture();

@@ -5,7 +5,6 @@ class FlightList extends Component {
 
     constructor(props) {
         super(props);
-        this.listType = this.props.type;
         this.handleFlightDeletion = this.handleFlightDeletion.bind(this);
         this.state = {flights: []};
     }
@@ -27,7 +26,7 @@ class FlightList extends Component {
         return (
             <div className="mt-3">
                 {this.state.flights.map((flight) =>
-                    <FlightListItem key={flight.code} type={this.listType} flight={flight} onDelete={this.handleFlightDeletion}/>
+                    <FlightListItem key={flight.code} type={this.props.type} flight={flight} custEmail={this.props.custEmail} onDelete={this.handleFlightDeletion}/>
                 )}
             </div>
         );
