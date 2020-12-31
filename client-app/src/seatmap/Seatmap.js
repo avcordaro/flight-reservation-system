@@ -39,17 +39,19 @@ export default class Seatmap extends React.Component {
     }
 
     selectSeat = (row, number) => {
-        const { selectedSeats } = this.state;
-        const seatAlreadySelected = selectedSeats.get(row, Set()).includes(number);
+        if(!this.props.readOnly) {
+            const { selectedSeats } = this.state;
+            const seatAlreadySelected = selectedSeats.get(row, Set()).includes(number);
 
-        if (!seatAlreadySelected) {
-            this.setState({
-                selectedSeats: Map({[row]: Set([number])}),
-            }, () => this.props.addSeatCallback(row, number));
-        } else {
-            this.setState({
-                selectedSeats: Map(),
-            }, () => this.props.removeSeatCallback(row, number))
+            if (!seatAlreadySelected) {
+                this.setState({
+                    selectedSeats: Map({[row]: Set([number])}),
+                }, () => this.props.addSeatCallback(row, number));
+            } else {
+                this.setState({
+                    selectedSeats: Map(),
+                }, () => this.props.removeSeatCallback(row, number))
+            }
         }
     }
 

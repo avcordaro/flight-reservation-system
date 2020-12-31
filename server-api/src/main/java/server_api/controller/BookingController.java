@@ -108,7 +108,7 @@ public class BookingController {
 			return new ArrayList<Booking>();
 		}
 		
-		return bookingRepository.findByFlight(flight.get(0));
+		return bookingRepository.findByFlightOrderBySeatNumber(flight.get(0));
 	}
 	
 	@DeleteMapping(path = "/delete")

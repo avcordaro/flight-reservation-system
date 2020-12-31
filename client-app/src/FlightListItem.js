@@ -48,7 +48,21 @@ class FlightListItem extends Component {
                                     <Button variant="primary" className="float-right mr-1"><FaPencilAlt/></Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Passengers</Tooltip>}>
-                                    <Button variant="primary" className="float-right mr-1"><FaUsers/></Button>
+                                    <Button 
+                                        variant="primary" 
+                                        className="float-right mr-1" 
+                                        onClick={() => 
+                                            this.props.history.push('/admin/view-passengers', {
+                                                flightCode: flight.code, 
+                                                source: flight.source,
+                                                destination: flight.destination,
+                                                departure: flight.departure,
+                                                arrival: flight.arrival,
+                                                adminEmail: this.props.adminEmail
+                                            })}
+                                    >
+                                        <FaUsers/>
+                                    </Button>
                                     </OverlayTrigger>
                                 </div>
                             }

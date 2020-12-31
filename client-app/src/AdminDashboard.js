@@ -35,7 +35,7 @@ class AdminDashboard extends Component {
                             <Button variant="primary" className="mr-3">New Flight&nbsp;&nbsp;<FaPlus/></Button>
                         </Row>
                         <hr/>
-                        <FlightList type="admin"/>
+                        <FlightList type="admin" adminEmail={this.state.adminEmail} history={this.props.history}/>
                     </Container>
                 </div>
             </FadeIn>

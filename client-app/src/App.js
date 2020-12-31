@@ -6,6 +6,7 @@ import Register from './Register.js';
 import CustomerDashboard from './CustomerDashboard.js';
 import AdminDashboard from './AdminDashboard.js';
 import NewBooking from './NewBooking.js';
+import ViewPassengers from './ViewPassengers.js'
 import logo from "./logo.png";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
             { path: '/login', Component: Login },
             { path: '/register', Component: Register },
             { path: '/admin', Component: AdminDashboard },
+            { path: '/admin/view-passengers', Component: ViewPassengers },
             { path: '/my-account', Component: CustomerDashboard },
             { path: '/my-account/new-booking', Component: NewBooking }
         ];  

@@ -12,7 +12,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import Spinner from 'react-bootstrap/Spinner';
 import FadeIn from 'react-fade-in';
 
-class App extends Component {
+class NewBooking extends Component {
 
     constructor(props) {
         super(props);
@@ -224,4 +224,4 @@ class App extends Component {
         );
     }
 }
-export default App;
+export default NewBooking;

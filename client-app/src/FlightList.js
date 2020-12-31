@@ -39,6 +39,7 @@ class FlightList extends Component {
                         flight={flight} 
                         custName={this.props.custName}
                         custEmail={this.props.custEmail} 
+                        adminEmail={this.props.adminEmail}
                         onDelete={this.handleFlightDeletion}
                         history={this.props.history}
                     />
