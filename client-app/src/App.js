@@ -6,6 +6,7 @@ import Register from './Register.js';
 import CustomerDashboard from './CustomerDashboard.js';
 import AdminDashboard from './AdminDashboard.js';
 import NewBooking from './NewBooking.js';
+import NewFlight from './NewFlight.js'
 import ViewPassengers from './ViewPassengers.js'
 import logo from "./logo.png";
 
@@ -18,9 +19,15 @@ class App extends Component {
             { path: '/register', Component: Register },
             { path: '/admin', Component: AdminDashboard },
             { path: '/admin/view-passengers', Component: ViewPassengers },
+            { path: '/admin/new-flight', Component: NewFlight },
             { path: '/my-account', Component: CustomerDashboard },
             { path: '/my-account/new-booking', Component: NewBooking }
         ];  
+    }
+
+    componentDidMount() {
+    	// Random GET request to wake up Heroku backend server.
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/all`);
     }
 
     render() {

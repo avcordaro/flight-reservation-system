@@ -32,7 +32,13 @@ class AdminDashboard extends Component {
                             <h3>Scheduled Flights</h3>
                         </Row>
                         <Row className="mt-4 justify-content-end">
-                            <Button variant="primary" className="mr-3">New Flight&nbsp;&nbsp;<FaPlus/></Button>
+                            <Button 
+                                variant="primary" 
+                                className="float-right mr-2" 
+                                onClick={() => this.props.history.push('/admin/new-flight', this.state)}
+                            >
+                                New Flight&nbsp;&nbsp;&nbsp;<FaPlus/>
+                            </Button>
                         </Row>
                         <hr/>
                         <FlightList type="admin" adminEmail={this.state.adminEmail} history={this.props.history}/>

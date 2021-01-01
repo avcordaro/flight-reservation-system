@@ -44,12 +44,13 @@ class Register extends Component {
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
-                    <Row className="justify-content-center mb-5">
+                    <Row className="justify-content-center mb-4">
                         <h3>
                             New Account
                         </h3>
                     </Row>
-                    <Row className="justify-content-center">
+                    <hr/>
+                    <Row className="justify-content-center mt-5">
                         <Col>
                             <Formik
                                 validationSchema={yup.object({
