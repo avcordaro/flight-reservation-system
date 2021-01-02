@@ -12,7 +12,7 @@ class AdminDashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = this.props.history.location.state;
+        this.historyState = this.props.history.location.state;
     }
 
     render() { 
@@ -21,7 +21,7 @@ class AdminDashboard extends Component {
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
-                            <small>({this.state.adminEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
+                            <small>({this.historyState.adminEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
                         </div>
                     </Alert>
                     <Container className="px-5 pb-5" style={{ width: '45rem' }}>
@@ -35,13 +35,13 @@ class AdminDashboard extends Component {
                             <Button 
                                 variant="primary" 
                                 className="float-right mr-2" 
-                                onClick={() => this.props.history.push('/admin/new-flight', this.state)}
+                                onClick={() => this.props.history.push('/admin/new-flight', this.historyState)}
                             >
                                 New Flight&nbsp;&nbsp;&nbsp;<FaPlus/>
                             </Button>
                         </Row>
                         <hr/>
-                        <FlightList type="admin" adminEmail={this.state.adminEmail} history={this.props.history}/>
+                        <FlightList type="admin" adminEmail={this.historyState.adminEmail} history={this.props.history}/>
                     </Container>
                 </div>
             </FadeIn>

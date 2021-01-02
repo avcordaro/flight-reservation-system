@@ -25,7 +25,7 @@ class Register extends Component {
             setSubmitting(false);
             this.setState({loading: false});
         } else {
-            fetch("http://localhost:8080/account/create",
+            fetch("https://flight-reservation-system-api.herokuapp.com/account/create",
                 {
                     method: 'POST',
                     headers: {
@@ -45,7 +45,7 @@ class Register extends Component {
                         setSubmitting(false);
                         this.setState({loading: false});
                     } else{
-                        this.props.history.push('/my-account', { custName: values.fullname, custEmail: values.email });
+                        this.props.history.push('/my-account', { custName: values.name, custEmail: values.email });
                     }
             });
         }

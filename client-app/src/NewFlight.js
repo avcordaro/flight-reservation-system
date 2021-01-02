@@ -16,6 +16,7 @@ class NewFlight extends Component {
         this.state = {loading: false};
         this.historyState = this.props.history.location.state;
         this.handleSubmit = this.handleSubmit.bind(this);
+        console.log(this.historyState);
     }
 
     handleSubmit(values, { setFieldError, setSubmitting }) {
@@ -44,7 +45,7 @@ class NewFlight extends Component {
                     setSubmitting(false);
                     this.setState({loading: false});
                 } else{
-                    this.props.history.push('/my-account', this.historyState)
+                    this.props.history.push('/admin', this.historyState)
                 }
                 
         });
