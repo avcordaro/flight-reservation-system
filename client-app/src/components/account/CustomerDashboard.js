@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Alert from 'react-bootstrap/Alert';
-import FlightList from './FlightList.js';
-import BookingList from './BookingList.js';
-import { IoMdExit } from 'react-icons/io';
+import Tabs from 'react-bootstrap/Tabs';
 import FadeIn from 'react-fade-in';
+import { IoMdExit } from 'react-icons/io';
+import BookingList from './../booking/BookingList.js';
+import FlightList from './../flight/FlightList.js';
 
 class CustomerDashboard extends Component {
 

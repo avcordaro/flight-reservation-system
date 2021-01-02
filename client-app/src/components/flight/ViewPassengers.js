@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Seatmap from './seatmap/Seatmap.js';
 import Table from 'react-bootstrap/Table';
-import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
-import { BsArrowRight } from 'react-icons/bs';
-import { HiOutlineMail } from 'react-icons/hi';
-import { AiOutlinePhone } from 'react-icons/ai';
 import FadeIn from 'react-fade-in';
+import { AiOutlinePhone } from 'react-icons/ai';
+import { BsArrowRight } from 'react-icons/bs';
+import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
+import { HiOutlineMail } from 'react-icons/hi';
+import Seatmap from './../seatmap/Seatmap.js';
 
 class ViewPassengers extends Component {
 

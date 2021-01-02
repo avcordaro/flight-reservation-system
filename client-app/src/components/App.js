@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { MemoryRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import Login from './Login.js';
-import Register from './Register.js';
-import CustomerDashboard from './CustomerDashboard.js';
-import AdminDashboard from './AdminDashboard.js';
-import NewBooking from './NewBooking.js';
-import NewFlight from './NewFlight.js'
-import ViewPassengers from './ViewPassengers.js'
-import logo from "./logo.png";
+import { MemoryRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
+import AdminDashboard from './account/AdminDashboard.js';
+import CustomerDashboard from './account/CustomerDashboard.js';
+import Login from './account/Login.js';
+import Register from './account/Register.js';
+import NewBooking from './booking/NewBooking.js';
+import NewFlight from './flight/NewFlight.js'
+import ViewPassengers from './flight/ViewPassengers.js'
+import logo from "./../logo.png";
 
 class App extends Component {
 

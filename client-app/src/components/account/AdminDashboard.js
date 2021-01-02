@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
-import FlightList from './FlightList.js';
-import { IoMdExit } from 'react-icons/io';
-import { FaPlus } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import FadeIn from 'react-fade-in';
+import { FaPlus } from 'react-icons/fa';
+import { IoMdExit } from 'react-icons/io';
+import FlightList from './../flight/FlightList.js';
 
 class AdminDashboard extends Component {
 

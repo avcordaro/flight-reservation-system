@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { Formik } from 'formik';
-import * as yup from 'yup';
-import Form from 'react-bootstrap/Form';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 import FadeIn from 'react-fade-in';
+import * as yup from 'yup';
 
 class NewFlight extends Component {
 
