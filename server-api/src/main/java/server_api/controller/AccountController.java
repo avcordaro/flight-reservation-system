@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -21,19 +22,13 @@ public class AccountController {
 	private AccountRepository accountRepository;
 
 	@PostMapping(path = "/create")
-	public @ResponseBody String createAccount(@RequestParam String email, @RequestParam String fullname, 
-			@RequestParam String password, @RequestParam(defaultValue = "false") String admin) {
+	public @ResponseBody String createAccount(@RequestBody Account newAccount) {
 		
-		if(!accountRepository.findByEmail(email).isEmpty()) {
+		if(!accountRepository.findByEmail(newAccount.getEmail()).isEmpty()) {
 			return "Email already in use";
 		}
-		Account a = new Account();
-		a.setFullname(fullname);
-		a.setEmail(email);
-		a.setPassword(password);
-		a.setAdmin(Boolean.parseBoolean(admin));
-		accountRepository.save(a);
-		return "New account saved";
+		accountRepository.save(newAccount);
+		return "New account saved.";
 	}
 
 	@GetMapping(path = "/find")

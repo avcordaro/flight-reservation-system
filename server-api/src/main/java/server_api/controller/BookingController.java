@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,9 +35,7 @@ public class BookingController {
 	private AccountRepository accountRepository;
 	
 	@PostMapping(path = "/create")
-	public @ResponseBody String createBooking(@RequestParam String flightCode, @RequestParam String email, 
-			@RequestParam String firstname, @RequestParam String lastname, @RequestParam String phone, 
-			@RequestParam String age, @RequestParam String seatNumber) {
+	public @ResponseBody String createBooking(@RequestParam String flightCode, @RequestParam String email, @RequestBody Booking newBooking) {
 		
 		List<Flight> flight = flightRepository.findByCode(flightCode);
 		List<Account> account = accountRepository.findByEmail(email);
@@ -48,20 +47,14 @@ public class BookingController {
 			return "Account does not exist";
 		}
 
-		List<Booking> booking = bookingRepository.findByFlightAndSeatNumber(flight.get(0), Integer.parseInt(seatNumber));
+		List<Booking> booking = bookingRepository.findByFlightAndSeatNumber(flight.get(0), newBooking.getSeatNumber());
 		if(!booking.isEmpty()) {
 			return "Seat already taken";
 		}
 		
-		Booking b = new Booking();
-		b.setFlight(flight.get(0));
-		b.setAccount(account.get(0));
-		b.setFirstname(firstname);
-		b.setLastname(lastname);
-		b.setPhone(phone);
-		b.setAge(Integer.parseInt(age));
-		b.setSeatNumber(Integer.parseInt(seatNumber));
-		bookingRepository.save(b);
+		newBooking.setFlight(flight.get(0));
+		newBooking.setAccount(account.get(0));
+		bookingRepository.save(newBooking);
 		return "New booking saved";
 	}
 	

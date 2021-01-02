@@ -29,7 +29,7 @@ public class Account {
 	private boolean admin;
 	
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value="account-bookings")
     private Set<Booking> bookings;
 
 	public Integer getId() {

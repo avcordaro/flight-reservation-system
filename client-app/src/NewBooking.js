@@ -53,15 +53,19 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        let url = `https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flightCode}` + 
-            `&email=${this.historyState.custEmail}&firstname=${values.firstname}&lastname=${values.lastname}&phone=${values.phone}` +
-            `&age=${values.age}&seatNumber=${values.seatNumber}`;
-        fetch(url, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flightCode}&email=${this.historyState.custEmail}`, 
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain'
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "firstname": values.firstname,
+                    "lastname": values.lastname,
+                    "phone": values.phone,
+                    "age": values.age,
+                    "seatNumber": values.seatNumber
+                })
             })
             .then(response => response.text())
             .then(data => {

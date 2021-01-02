@@ -20,15 +20,22 @@ class NewFlight extends Component {
 
     handleSubmit(values, { setFieldError, setSubmitting }) {
         this.setState({loading: true}); 
-        let url = `https://flight-reservation-system-api.herokuapp.com/flight/create?code=${values.code}` + 
-            `&date=${values.date}&source=${values.source}&destination=${values.destination}&srcCity=${values.srcCity}` +
-            `&destCity=${values.destCity}&departure=${values.departure}&arrival=${values.arrival}`;
-        fetch(url, 
+        fetch("https://flight-reservation-system-api.herokuapp.com/flight/create", 
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain'
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "code": values.code,
+                    "date": values.date,
+                    "source": values.source,
+                    "destination": values.destination,
+                    "srcCity": values.srcCity,
+                    "destCity": values.destCity,
+                    "departure": values.departure,
+                    "arrival": values.arrival
+                })
             })
             .then(response => response.text())
             .then(data => {

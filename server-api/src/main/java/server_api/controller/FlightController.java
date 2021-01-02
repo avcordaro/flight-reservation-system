@@ -4,8 +4,6 @@ import server_api.repository.BookingRepository;
 import server_api.repository.FlightRepository;
 import server_api.model.Flight;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,24 +25,12 @@ public class FlightController {
 	private BookingRepository bookingRepository;
 	
 	@PostMapping(path = "/create")
-	public @ResponseBody String createFlight(@RequestParam String code, @RequestParam String date, 
-			@RequestParam String source, @RequestParam String destination, 
-			@RequestParam String srcCity, @RequestParam String destCity, 
-			@RequestParam String departure, @RequestParam String arrival) {
+	public @ResponseBody String createFlight(@RequestBody Flight newFlight) {
 		
-		if(!flightRepository.findByCode(code).isEmpty()) {
+		if(!flightRepository.findByCode(newFlight.getCode()).isEmpty()) {
 			return "Flight code already taken";
 		}
-		Flight f = new Flight();
-		f.setCode(code);
-		f.setDate(Date.valueOf(date));
-		f.setSource(source);
-		f.setDestination(destination);
-		f.setSrcCity(srcCity);
-		f.setDestCity(destCity);
-		f.setDeparture(Time.valueOf(departure));
-		f.setArrival(Time.valueOf(arrival));
-		flightRepository.save(f);
+		flightRepository.save(newFlight);
 		return "New flight saved";
 	}
 	

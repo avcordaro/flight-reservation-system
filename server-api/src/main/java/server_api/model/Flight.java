@@ -32,7 +32,7 @@ public class Flight {
 	private Time arrival;
 	
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value="flight-bookings")
     private Set<Booking> bookings;
     
 	public String getCode() {

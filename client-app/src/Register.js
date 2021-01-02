@@ -20,24 +20,35 @@ class Register extends Component {
 
     handleSubmit(values, { setFieldError, setSubmitting }) {
         this.setState({loading: true});
-        fetch(`https://flight-reservation-system-api.herokuapp.com/account/create?fullname=${values.name}&email=${values.email}&password=${values.password}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'text/plain'
-                }
-            })
-            .then(response => response.text())
-            .then(data => {
-                if(data === "Email already in use") {
-                    setFieldError("email", "Email already in use.");
-                    setSubmitting(false);
-                    this.setState({loading: false});
-                } else{
-                    this.props.history.push('/my-account', { custName: values.fullname, custEmail: values.email });
-                }
+        if(values.password !== values.confirmPassword) {
+            setFieldError("confirmPassword", "Passwords do not match.");
+            setSubmitting(false);
+            this.setState({loading: false});
+        } else {
+            fetch("http://localhost:8080/account/create",
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "fullname": values.name,
+                        "email": values.email,
+                        "password": values.password,
+                        "admin": false
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if(data === "Email already in use") {
+                        setFieldError("email", "Email already in use.");
+                        setSubmitting(false);
+                        this.setState({loading: false});
+                    } else{
+                        this.props.history.push('/my-account', { custName: values.fullname, custEmail: values.email });
+                    }
             });
-
+        }
     }
 
     render() { 
@@ -56,14 +67,16 @@ class Register extends Component {
                                 validationSchema={yup.object({
                                     name: yup.string().required("Full name required."),
                                     email: yup.string().email("Invalid email address.").required("Email required."),
-                                    password: yup.string().required("Password required.")
+                                    password: yup.string().required("Password required."),
+                                    confirmPassword: yup.string().required("Confirm password required.")
                                 })}
                                 validateOnChange={false}
                                 onSubmit={this.handleSubmit}
                                 initialValues={{
                                     name: '',
                                     email: '',
-                                    password: ''
+                                    password: '',
+                                    confirmPassword: ''
                                 }}
                             >
                                 {({
@@ -114,6 +127,20 @@ class Register extends Component {
                                                 isInvalid={errors.password}
                                                 />
                                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="justify-content-center">
+                                            <Form.Group as={Col} xs="6" sm="6">
+                                                <Form.Label>Confirm Password</Form.Label>
+                                                <Form.Control
+                                                id="confirmPassword"
+                                                name="confirmPassword"
+                                                type="password"
+                                                value={values.confirmPassword}
+                                                onChange={handleChange}
+                                                isInvalid={errors.confirmPassword}
+                                                />
+                                                <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row className="justify-content-center">

@@ -18,12 +18,12 @@ public class Booking {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
-	@JsonBackReference
+	@JsonBackReference(value="account-bookings")
     private Account account;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "flight_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value="flight-bookings")
     private Flight flight;
 	
 	private String firstname;
