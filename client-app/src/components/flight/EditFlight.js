@@ -9,6 +9,16 @@ import Spinner from 'react-bootstrap/Spinner';
 import FadeIn from 'react-fade-in';
 import * as yup from 'yup';
 
+function PageLoadValidation(props) {
+    // Check if user nagivated to this page legitimately
+    if (!props.history.location.state) {
+        props.history.push('/login');
+        return null;
+    } else {
+        return <NewFlight {...props}/>;
+    }
+}
+
 class NewFlight extends Component {
 
     constructor(props) {
@@ -227,4 +237,4 @@ class NewFlight extends Component {
         );
     }
 }
-export default NewFlight;
+export default PageLoadValidation;

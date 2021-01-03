@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import { MemoryRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
 import logo from "./../logo.png";
 import AdminDashboard from './account/AdminDashboard.js';
 import CustomerDashboard from './account/CustomerDashboard.js';
@@ -9,8 +9,9 @@ import Register from './account/Register.js';
 import EditBooking from './booking/EditBooking.js';
 import NewBooking from './booking/NewBooking.js';
 import EditFlight from './flight/EditFlight.js';
-import NewFlight from './flight/NewFlight.js'
-import ViewPassengers from './flight/ViewPassengers.js'
+import NewFlight from './flight/NewFlight.js';
+import ViewPassengers from './flight/ViewPassengers.js';
+import PageNotFound from './PageNotFound.js';
 
 class App extends Component {
 
@@ -37,7 +38,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <MemoryRouter>
+                <BrowserRouter>
                     <Navbar bg="dark" variant="dark">
                         <Link to={"/"}>
                             <img alt="logo" src={logo} width="40" height="40" />
@@ -55,8 +56,9 @@ class App extends Component {
                                 component={route.Component}
                             />
                         ))}
+                        <Route exact path="/*" component={PageNotFound}/>
                     </Switch>
-                </MemoryRouter>
+                </BrowserRouter>
             </div>
         );
     }

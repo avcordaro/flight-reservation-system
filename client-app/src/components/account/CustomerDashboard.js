@@ -10,6 +10,16 @@ import { IoMdExit } from 'react-icons/io';
 import BookingList from './../booking/BookingList.js';
 import FlightList from './../flight/FlightList.js';
 
+function PageLoadValidation(props) {
+    // Check if user nagivated to this page legitimately
+    if (!props.history.location.state) {
+        props.history.push('/login');
+        return null;
+    } else {
+        return <CustomerDashboard {...props}/>;
+    }
+}
+
 class CustomerDashboard extends Component {
 
     constructor(props) {
@@ -46,4 +56,4 @@ class CustomerDashboard extends Component {
     }
 }
 
-export default CustomerDashboard;
+export default PageLoadValidation;

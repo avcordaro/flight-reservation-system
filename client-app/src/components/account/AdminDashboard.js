@@ -9,6 +9,16 @@ import { FiUser } from 'react-icons/fi';
 import { IoMdExit } from 'react-icons/io';
 import FlightList from './../flight/FlightList.js';
 
+function PageLoadValidation(props) {
+    // Check if user nagivated to this page legitimately
+    if (!props.history.location.state) {
+        props.history.push('/login');
+        return null;
+    } else {
+        return <AdminDashboard {...props}/>;
+    }
+}
+
 class AdminDashboard extends Component {
 
     constructor(props) {
@@ -16,7 +26,7 @@ class AdminDashboard extends Component {
         this.historyState = this.props.history.location.state;
     }
 
-    render() { 
+    render() {
         return (
             <FadeIn transitionDuration="750">
                 <div>
@@ -50,4 +60,4 @@ class AdminDashboard extends Component {
     }
 }
 
-export default AdminDashboard;
+export default PageLoadValidation;

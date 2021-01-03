@@ -12,6 +12,16 @@ import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
 import * as yup from 'yup';
 import Seatmap from './../seatmap/Seatmap.js';
 
+function PageLoadValidation(props) {
+    // Check if user nagivated to this page legitimately
+    if (!props.history.location.state) {
+        props.history.push('/login');
+        return null;
+    } else {
+        return <NewBooking {...props}/>;
+    }
+}
+
 class NewBooking extends Component {
 
     constructor(props) {
@@ -229,4 +239,4 @@ class NewBooking extends Component {
         );
     }
 }
-export default NewBooking;
+export default PageLoadValidation;

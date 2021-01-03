@@ -11,6 +11,16 @@ import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
 import Seatmap from './../seatmap/Seatmap.js';
 
+function PageLoadValidation(props) {
+    // Check if user nagivated to this page legitimately
+    if (!props.history.location.state) {
+        props.history.push('/login');
+        return null;
+    } else {
+        return <ViewPassengers {...props}/>;
+    }
+}
+
 class ViewPassengers extends Component {
 
     constructor(props) {
@@ -119,4 +129,4 @@ class ViewPassengers extends Component {
         );
     }
 }
-export default ViewPassengers;
+export default PageLoadValidation;
