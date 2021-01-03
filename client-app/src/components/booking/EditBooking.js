@@ -16,7 +16,7 @@ class NewBooking extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {rows: [], loadSeatmap: false, selectedSeat: '', loading: false};
+        this.state = {rows: [], loadSeatmap: false, oldBooking: null, selectedSeat: '', loading: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAddSeat = this.handleAddSeat.bind(this);
         this.handleRemoveSeat = this.handleRemoveSeat.bind(this);
@@ -44,7 +44,20 @@ class NewBooking extends Component {
                         row = [];
                     }
                 }
-                this.setState({rows: rows, loadSeatmap: true});
+                this.setState(prevState => ({
+                    ...prevState,
+                    rows: rows,
+                    loadSeatmap: true
+                }));   
+        });
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/find?id=${this.historyState.bookingId}`)
+            .then(response => response.json())
+            .then(data => {
+                this.setState(prevState => ({
+                    ...prevState,
+                    selectedSeat: data.seatNumber,
+                    oldBooking: data
+                }));   
         });
     }
 
@@ -53,7 +66,7 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flightCode}&email=${this.historyState.custEmail}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/edit?id=${this.historyState.bookingId}`, 
             {
                 method: 'POST',
                 headers: {

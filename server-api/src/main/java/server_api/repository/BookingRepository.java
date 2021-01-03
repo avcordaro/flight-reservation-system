@@ -13,8 +13,6 @@ public interface BookingRepository extends CrudRepository<Booking, Integer> {
 	
 	List<Booking> findByFlightAndSeatNumber(Flight flight, int seatNumber);
 	
-	List<Booking> findByAccountAndFlight(Account account, Flight flight);
-	
 	List<Booking> findByFlightOrderBySeatNumber(Flight flight);
 	
 	@Query("SELECT b.id AS id, b.firstname AS firstname, b.lastname AS lastname, b.phone AS phone, b.age AS age,"

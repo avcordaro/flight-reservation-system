@@ -57,6 +57,20 @@ public class BookingController {
 		bookingRepository.save(newBooking);
 		return "New booking saved";
 	}
+
+	@PostMapping(path = "/edit")
+	public @ResponseBody String createBooking(@RequestParam String id, @RequestBody Booking updatedBooking) {
+
+		Booking booking = bookingRepository.findById(Integer.parseInt(id)).get();
+		
+		booking.setFirstname(updatedBooking.getFirstname());
+		booking.setLastname(updatedBooking.getLastname());
+		booking.setPhone(updatedBooking.getPhone());
+		booking.setAge(updatedBooking.getAge());
+		booking.setSeatNumber(updatedBooking.getSeatNumber());
+		bookingRepository.save(booking);
+		return "Booking updated.";
+	}
 	
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Booking> allBookings() {
@@ -65,19 +79,9 @@ public class BookingController {
 	}
 	
 	@GetMapping(path = "/find")
-	public @ResponseBody List<Booking> findBooking(@RequestParam String email, @RequestParam String flightCode) {
+	public @ResponseBody Booking findBooking(@RequestParam String id) {
 		
-		List<Flight> flight = flightRepository.findByCode(flightCode);
-		List<Account> account = accountRepository.findByEmail(email);
-
-		if(flight.isEmpty()) {
-			return new ArrayList<Booking>();
-		}
-		if(account.isEmpty()) {
-			return new ArrayList<Booking>();
-		}
-		
-		return bookingRepository.findByAccountAndFlight(account.get(0), flight.get(0));
+		return bookingRepository.findById(Integer.parseInt(id)).get();
 	}
 	
 	@GetMapping(path = "/find-by-account")

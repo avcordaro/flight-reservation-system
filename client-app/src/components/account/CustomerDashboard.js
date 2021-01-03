@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import FadeIn from 'react-fade-in';
+import { FiUser } from 'react-icons/fi';
 import { IoMdExit } from 'react-icons/io';
 import BookingList from './../booking/BookingList.js';
 import FlightList from './../flight/FlightList.js';
@@ -22,7 +23,7 @@ class CustomerDashboard extends Component {
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
-                            <small>({this.historyState.custEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
+                            <small><Alert.Link href="/"><FiUser/>&nbsp;My Account</Alert.Link>&nbsp;({this.historyState.custEmail})&nbsp;&nbsp;|&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
                         </div>
                     </Alert>
                     <Container className="px-5 pb-5" style={{ width: '45rem' }}>

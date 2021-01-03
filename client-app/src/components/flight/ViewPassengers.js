@@ -72,7 +72,7 @@ class ViewPassengers extends Component {
                             variant="primary" 
                             className="mr-3" 
                             onClick={() => 
-                                this.props.history.push('/admin', this.historyState)
+                                this.props.history.push('/admin', {adminEmail: this.props.adminEmail})
                             }
                         >
                             Back
