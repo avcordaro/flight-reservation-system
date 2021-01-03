@@ -16,15 +16,24 @@ class NewBooking extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {rows: [], loadSeatmap: false, oldBooking: null, selectedSeat: '', loading: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleAddSeat = this.handleAddSeat.bind(this);
         this.handleRemoveSeat = this.handleRemoveSeat.bind(this);
         this.historyState = this.props.history.location.state;
+        this.state = {rows: [], loadSeatmap: false, oldBooking: this.historyState.booking, selectedSeat: '', loading: false};
     }
 
     componentDidMount() {
-        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.flightCode}`)
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/find?id=${this.historyState.booking.id}`)
+            .then(response => response.json())
+            .then(data => {
+                this.setState(prevState => ({
+                    ...prevState,
+                    selectedSeat: data.seatNumber,
+                    oldBooking: data
+                }));   
+        });
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.booking.flightCode}`)
             .then(response => response.json())
             .then(data => {
                 let occupiedSeats = data;
@@ -34,7 +43,7 @@ class NewBooking extends Component {
                 for(let i = 0; i < 91; i++) {
                     if(null_seats.includes(i)) {
                         row.push(null);
-                    } else if(occupiedSeats.includes(i+1)) {
+                    } else if(occupiedSeats.includes(i+1) && i+1 !== this.state.oldBooking.seatNumber) {
                         row.push({number: (i+1), isReserved: true});
                     } else {
                         row.push({number: (i+1)});
@@ -50,15 +59,6 @@ class NewBooking extends Component {
                     loadSeatmap: true
                 }));   
         });
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/find?id=${this.historyState.bookingId}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState(prevState => ({
-                    ...prevState,
-                    selectedSeat: data.seatNumber,
-                    oldBooking: data
-                }));   
-        });
     }
 
     handleSubmit(values) {
@@ -66,7 +66,7 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/edit?id=${this.historyState.bookingId}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/edit?id=${this.historyState.booking.id}`, 
             {
                 method: 'POST',
                 headers: {
@@ -101,20 +101,21 @@ class NewBooking extends Component {
     }
 
     render() {
+        let { booking } = this.historyState;
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
                     <Row className="justify-content-center mb-5">
                         <h3>
-                            New Booking
+                            Edit Booking
                         </h3>
                     </Row>
                     <hr/>
                     <Row>
                         <Col>
-                            <h6 className="mb-3 mt-3">Flight code: {this.historyState.flightCode}</h6>
-                            <h6 className="mb-3"><FaPlaneDeparture/> {this.historyState.source} <BsArrowRight/> {this.historyState.destination} <FaPlaneArrival/></h6>
-                            <h5 className="mb-4">{this.historyState.departure.substr(0, 5)} <BsArrowRight/> {this.historyState.arrival.substr(0, 5)}</h5>
+                            <h6 className="mb-3 mt-3">Flight code: {booking.flightCode}</h6>
+                            <h6 className="mb-3"><FaPlaneDeparture/> {booking.source} <BsArrowRight/> {booking.destination} <FaPlaneArrival/></h6>
+                            <h5 className="mb-4">{booking.departure.substr(0, 5)} <BsArrowRight/> {booking.arrival.substr(0, 5)}</h5>
                             <hr/>
                             <Formik
                                 validationSchema={yup.object({
@@ -127,11 +128,11 @@ class NewBooking extends Component {
                                 validateOnChange={false}
                                 onSubmit={this.handleSubmit}
                                 initialValues={{
-                                    firstname: '',
-                                    lastname: '',
-                                    phone: '',
-                                    age: '',
-                                    seatNumber: ''
+                                    firstname: this.state.oldBooking.firstname,
+                                    lastname: this.state.oldBooking.lastname,
+                                    phone: this.state.oldBooking.phone,
+                                    age: this.state.oldBooking.age,
+                                    seatNumber: this.state.oldBooking.seatNumber
                                 }}
                             >
                                 {({
@@ -218,16 +219,13 @@ class NewBooking extends Component {
                                                 variant="primary" 
                                                 className="mt-3 mx-2" 
                                                 onClick={() => 
-                                                    this.props.history.push('/my-account/', {
-                                                        custName: this.historyState.custName, 
-                                                        custEmail: this.historyState.custEmail
-                                                    })
+                                                    this.props.history.push('/my-account/', this.historyState)
                                                 }
                                             >
                                                 Cancel
                                             </Button>
                                             <Button type="submit" className="mt-3 mx-2">
-                                                Book {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                                Save {this.state.loading && <Spinner animation="border" size="sm"/>}
                                             </Button>
                                         </Form.Row>
                                     </Form>
@@ -236,7 +234,7 @@ class NewBooking extends Component {
                         </Col>
                         <Col sm="auto">
                             <h5 className="mb-3 mt-3">Please select your seat...</h5>
-                            {this.state.loadSeatmap && <Seatmap rows={this.state.rows} addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat}/>}
+                            {this.state.loadSeatmap && <Seatmap rows={this.state.rows} selectedSeat={this.state.selectedSeat} addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat}/>}
                         </Col>
                     </Row>
                 </Container>

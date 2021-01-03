@@ -36,7 +36,7 @@ class CustomerDashboard extends Component {
                                 <FlightList type="customer" custName={this.historyState.custName} custEmail={this.historyState.custEmail} history={this.props.history}/>
                             </Tab>
                             <Tab eventKey="bookings" title="My Bookings">
-                                <BookingList custEmail={this.historyState.custEmail}/>
+                                <BookingList custName={this.historyState.custName} custEmail={this.historyState.custEmail} history={this.props.history}/>
                             </Tab>
                         </Tabs>
                     </Container>

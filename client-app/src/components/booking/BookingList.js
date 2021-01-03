@@ -34,7 +34,14 @@ class BookingList extends Component {
         return (
             <div className="mt-3">
                 {this.state.bookings.map((booking) =>
-                    <BookingListItem key={booking.id} booking={booking} custEmail={this.props.custEmail} onDelete={this.handleBookingDeletion}/>
+                    <BookingListItem 
+                        key={booking.id} 
+                        history={this.props.history}
+                        booking={booking} 
+                        custName={this.props.custName} 
+                        custEmail={this.props.custEmail} 
+                        onDelete={this.handleBookingDeletion}
+                    />
                 )}
             </div>
         );

@@ -48,10 +48,22 @@ class BookingListItem extends Component {
                         </Col>
                         <Col sm="auto">
                             <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                            <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
+                                <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
                             </OverlayTrigger>
                             <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
-                            <Button variant="primary" className="float-right mr-1"><FaPencilAlt/></Button>
+                                <Button 
+                                    variant="primary" 
+                                    className="float-right mr-1"
+                                    onClick={() => 
+                                        this.props.history.push('/my-account/edit-booking', {
+                                            booking: booking,
+                                            custName: this.props.custName,
+                                            custEmail: this.props.custEmail
+                                        })
+                                    }
+                                >
+                                    <FaPencilAlt/>
+                                </Button>
                             </OverlayTrigger>
                         </Col>
                     </Row>
