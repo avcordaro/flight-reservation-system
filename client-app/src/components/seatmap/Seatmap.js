@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Row from './Row.js';
-import { Map, Set } from 'immutable/dist/immutable.min.js';
 import Seat from './Seat.js';
 import Blank from './Blank.js';
 import './main.css'
@@ -29,27 +28,26 @@ export default class Seatmap extends React.Component {
         super(props);
         const { rows, seatWidth } = props;
         this.state = {
-            selectedSeats: Map(),
+            selectedSeat: this.props.selectedSeat,
             width: seatWidth * Math.max.apply(null, rows.map(row => row.length))
         };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.selectedSeats !== this.state.selectedSeats;
+        return nextState.selectedSeat !== this.state.selectedSeat;
     }
 
     selectSeat = (row, number) => {
         if(!this.props.readOnly) {
-            const { selectedSeats } = this.state;
-            const seatAlreadySelected = selectedSeats.get(row, Set()).includes(number);
+            const seatAlreadySelected = this.state.selectedSeat === number ? true : false;
 
             if (!seatAlreadySelected) {
                 this.setState({
-                    selectedSeats: Map({[row]: Set([number])}),
+                    selectedSeat: number,
                 }, () => this.props.addSeatCallback(row, number));
             } else {
                 this.setState({
-                    selectedSeats: Map(),
+                    selectedSeats: null,
                 }, () => this.props.removeSeatCallback(row, number))
             }
         }
@@ -61,40 +59,30 @@ export default class Seatmap extends React.Component {
     };
 
     renderRows() {
-        const { selectedSeats: seats } = this.state;
-        const { alpha } = this.props;
         return this.props.rows.map((row, index) => {
-            const rowNumber = alpha ?
-                String.fromCharCode('A'.charCodeAt(0) + index) :
-                (index + 1).toString();
-            const isSelected = !seats.get(rowNumber, Set()).isEmpty();
+            const rowNumber = (index + 1).toString();
             const props = {
-                rowNumber,
-                isSelected,
-                selectedSeat: null,
+            	isEnabled: !this.props.readOnly,
                 seats: row,
-                key: `Row${rowNumber}`,
-                selectSeat: this.selectSeat
+                key: `Row${rowNumber}`
             };
 
             return (
                 <Row  {...props}>
-                    {this.renderSeats(row, rowNumber, isSelected)}
+                    {this.renderSeats(row, rowNumber)}
                 </Row>
             );
         });
     };
 
-    renderSeats(seats, rowNumber, isRowSelected) {
-        const { selectedSeats, size } = this.state;
-        const { maxReservableSeats } = this.props;
+    renderSeats(seats, rowNumber) {
         return seats.map((seat, index) => {
             if (seat === null) return <Blank key={index}/>;
-            const isSelected = isRowSelected && selectedSeats.get(rowNumber).includes(seat.number);
+            const isSelected = seat.number === this.state.selectedSeat ? true : false;
             const props = {
                 isSelected,
+                isEnabled: !this.props.readOnly,
                 isReserved: seat.isReserved,
-                isEnabled: size < maxReservableSeats,
                 selectSeat: this.selectSeat.bind(this, rowNumber, seat.number),
                 seatNumber: seat.number,
                 key: index

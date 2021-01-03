@@ -13,7 +13,7 @@ class CustomerDashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = this.props.history.location.state;
+        this.historyState = this.props.history.location.state;
     }
 
     render() { 
@@ -22,21 +22,20 @@ class CustomerDashboard extends Component {
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
-                            <small>({this.state.custEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
+                            <small>({this.historyState.custEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
                         </div>
                     </Alert>
                     <Container className="px-5 pb-5" style={{ width: '45rem' }}>
-
                         <Row className="my-4 ml-2">
-                            <h5>Welcome, {this.state.custName}.</h5>
+                            <h5>Welcome, {this.historyState.custName}.</h5>
                         </Row>
                         <hr/>
                         <Tabs defaultActiveKey="flights">
                             <Tab eventKey="flights" title="Flights">
-                                <FlightList type="customer" custName={this.state.custName} custEmail={this.state.custEmail} history={this.props.history}/>
+                                <FlightList type="customer" custName={this.historyState.custName} custEmail={this.historyState.custEmail} history={this.props.history}/>
                             </Tab>
                             <Tab eventKey="bookings" title="My Bookings">
-                                <BookingList custEmail={this.state.custEmail}/>
+                                <BookingList custEmail={this.historyState.custEmail}/>
                             </Tab>
                         </Tabs>
                     </Container>

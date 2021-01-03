@@ -23,7 +23,7 @@ export default class Seat extends React.Component {
     }
 
     render() {
-        const { isSelected, isEnabled, isReserved } = this.props;
+        const { isSelected, isReserved, isEnabled } = this.props;
         const className = cx('Seat',
             { 'Seat--selected': isSelected },
             { 'Seat--enabled': !isSelected && isEnabled && !isReserved},
