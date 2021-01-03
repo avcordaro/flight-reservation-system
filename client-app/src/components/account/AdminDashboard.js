@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import FadeIn from 'react-fade-in';
 import { FaPlus } from 'react-icons/fa';
+import { FiUser } from 'react-icons/fi';
 import { IoMdExit } from 'react-icons/io';
 import FlightList from './../flight/FlightList.js';
 
@@ -21,7 +22,7 @@ class AdminDashboard extends Component {
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
-                            <small>({this.historyState.adminEmail})&nbsp;&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
+                            <small><Alert.Link href="/"><FiUser/>&nbsp;My Account</Alert.Link>&nbsp;({this.historyState.adminEmail})&nbsp;&nbsp;|&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
                         </div>
                     </Alert>
                     <Container className="px-5 pb-5" style={{ width: '45rem' }}>

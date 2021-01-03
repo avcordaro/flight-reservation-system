@@ -12,7 +12,7 @@ import { FaPlaneDeparture, FaPlaneArrival } from 'react-icons/fa';
 import * as yup from 'yup';
 import Seatmap from './../seatmap/Seatmap.js';
 
-class NewBooking extends Component {
+class EditBooking extends Component {
 
     constructor(props) {
         super(props);
@@ -98,7 +98,7 @@ class NewBooking extends Component {
     }
 
     render() {
-        let { booking } = this.historyState;
+        let booking = this.historyState.booking;
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
@@ -239,4 +239,4 @@ class NewBooking extends Component {
         );
     }
 }
-export default NewBooking;
+export default EditBooking;

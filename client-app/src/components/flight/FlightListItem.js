@@ -42,27 +42,33 @@ class FlightListItem extends Component {
                             {this.props.type === "admin" &&
                                 <div>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                                    <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
+                                        <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
-                                    <Button variant="primary" className="float-right mr-1"><FaPencilAlt/></Button>
+                                        <Button 
+                                            variant="primary" 
+                                            className="float-right mr-1"
+                                            onClick={() => 
+                                                this.props.history.push('/admin/edit-flight', {
+                                                    flight: flight,
+                                                    adminEmail: this.props.adminEmail
+                                            })}
+                                        >
+                                            <FaPencilAlt/>
+                                        </Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Passengers</Tooltip>}>
-                                    <Button 
-                                        variant="primary" 
-                                        className="float-right mr-1" 
-                                        onClick={() => 
-                                            this.props.history.push('/admin/view-passengers', {
-                                                flightCode: flight.code, 
-                                                source: flight.source,
-                                                destination: flight.destination,
-                                                departure: flight.departure,
-                                                arrival: flight.arrival,
-                                                adminEmail: this.props.adminEmail
+                                        <Button 
+                                            variant="primary" 
+                                            className="float-right mr-1" 
+                                            onClick={() => 
+                                                this.props.history.push('/admin/view-passengers', {
+                                                    flight: flight,
+                                                    adminEmail: this.props.adminEmail
                                             })}
-                                    >
-                                        <FaUsers/>
-                                    </Button>
+                                        >
+                                            <FaUsers/>
+                                        </Button>
                                     </OverlayTrigger>
                                 </div>
                             }

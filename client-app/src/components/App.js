@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { MemoryRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
+import logo from "./../logo.png";
 import AdminDashboard from './account/AdminDashboard.js';
 import CustomerDashboard from './account/CustomerDashboard.js';
 import Login from './account/Login.js';
 import Register from './account/Register.js';
-import NewBooking from './booking/NewBooking.js';
 import EditBooking from './booking/EditBooking.js';
+import NewBooking from './booking/NewBooking.js';
+import EditFlight from './flight/EditFlight.js';
 import NewFlight from './flight/NewFlight.js'
 import ViewPassengers from './flight/ViewPassengers.js'
-import logo from "./../logo.png";
 
 class App extends Component {
 
@@ -21,6 +22,7 @@ class App extends Component {
             { path: '/admin', Component: AdminDashboard },
             { path: '/admin/view-passengers', Component: ViewPassengers },
             { path: '/admin/new-flight', Component: NewFlight },
+            { path: '/admin/edit-flight', Component: EditFlight },
             { path: '/my-account', Component: CustomerDashboard },
             { path: '/my-account/new-booking', Component: NewBooking },
             { path: '/my-account/edit-booking', Component: EditBooking }

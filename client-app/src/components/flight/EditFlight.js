@@ -18,16 +18,15 @@ class NewFlight extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(values, { setFieldError, setSubmitting }) {
+    handleSubmit(values) {
         this.setState({loading: true}); 
-        fetch("https://flight-reservation-system-api.herokuapp.com/flight/create", 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/edit?code=${values.code}`, 
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "code": values.code,
                     "date": values.date,
                     "source": values.source,
                     "destination": values.destination,
@@ -39,24 +38,18 @@ class NewFlight extends Component {
             })
             .then(response => response.text())
             .then(data => {
-                if(data === "Flight code already taken") {
-                    setFieldError("code", "Flight code already taken.");
-                    setSubmitting(false);
-                    this.setState({loading: false});
-                } else{
-                    this.props.history.push('/admin', this.historyState)
-                }
-                
+                this.props.history.push('/admin', this.historyState)     
         });
     }
 
     render() {
+        let flight = this.historyState.flight;
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
                     <Row className="justify-content-center mb-4">
                         <h3>
-                            New Flight
+                            Edit Flight
                         </h3>
                     </Row>
                     <hr/>
@@ -76,14 +69,14 @@ class NewFlight extends Component {
                                 validateOnChange={false}
                                 onSubmit={this.handleSubmit}
                                 initialValues={{
-                                    code: '',
-                                    date: '',
-                                    source: '',
-                                    destination: '',
-                                    srcCity: '',
-                                    destCity: '',
-                                    departure: '',
-                                    arrival: ''
+                                    code: flight.code,
+                                    date: flight.date,
+                                    source: flight.source,
+                                    destination: flight.destination,
+                                    srcCity: flight.srcCity,
+                                    destCity: flight.destCity,
+                                    departure: flight.departure,
+                                    arrival: flight.arrival
                                 }}
                             >
                                 {({
@@ -221,7 +214,7 @@ class NewFlight extends Component {
                                                 Cancel
                                             </Button>
                                             <Button type="submit" className="mt-3 mx-2">
-                                                Create {this.state.loading && <Spinner animation="border" size="sm"/>}
+                                                Save {this.state.loading && <Spinner animation="border" size="sm"/>}
                                             </Button>
                                         </Form.Row>
                                     </Form>

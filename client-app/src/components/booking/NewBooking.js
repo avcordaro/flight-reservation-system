@@ -53,7 +53,7 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flight.flightCode}&email=${this.historyState.custEmail}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?code=${this.historyState.flight.flightCode}&email=${this.historyState.custEmail}`, 
             {
                 method: 'POST',
                 headers: {
@@ -88,7 +88,7 @@ class NewBooking extends Component {
     }
 
     render() {
-        let { flight } = this.historyState;
+        let flight = this.historyState.flight;
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
