@@ -69,6 +69,7 @@ public class BookingController {
 		booking.setAge(updatedBooking.getAge());
 		booking.setSeatNumber(updatedBooking.getSeatNumber());
 		bookingRepository.save(booking);
+		
 		return "Booking updated.";
 	}
 	

@@ -34,6 +34,23 @@ public class FlightController {
 		return "New flight saved";
 	}
 	
+	@PostMapping(path = "/edit")
+	public @ResponseBody String createFlight(@RequestParam String code, @RequestBody Flight updatedFlight) {
+		
+		Flight flight = flightRepository.findByCode(code).get(0);
+		
+		flight.setDate(updatedFlight.getDate());
+		flight.setSource(updatedFlight.getSource());
+		flight.setDestination(updatedFlight.getDestination());
+		flight.setSrcCity(updatedFlight.getSrcCity());
+		flight.setDestCity(updatedFlight.getDestCity());
+		flight.setDeparture(updatedFlight.getDeparture());
+		flight.setArrival(updatedFlight.getArrival());
+		
+		flightRepository.save(flight);
+		return "Flight updated.";
+	}
+	
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Flight> allFlights() {
 		
