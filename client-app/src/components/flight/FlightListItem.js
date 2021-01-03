@@ -73,11 +73,7 @@ class FlightListItem extends Component {
                                         className="float-right mr-2" 
                                         onClick={() => 
                                             this.props.history.push('/my-account/new-booking', {
-                                                flightCode: flight.code, 
-                                                source: flight.source,
-                                                destination: flight.destination,
-                                                departure: flight.departure,
-                                                arrival: flight.arrival,
+                                                flight: flight,
                                                 custName: this.props.custName, 
                                                 custEmail: this.props.custEmail
                                             })}

@@ -20,19 +20,16 @@ class NewBooking extends Component {
         this.handleAddSeat = this.handleAddSeat.bind(this);
         this.handleRemoveSeat = this.handleRemoveSeat.bind(this);
         this.historyState = this.props.history.location.state;
-        this.state = {rows: [], loadSeatmap: false, oldBooking: this.historyState.booking, selectedSeat: '', loading: false};
+        this.state = {
+            rows: [], 
+            loadSeatmap: false, 
+            oldBooking: this.historyState.booking, 
+            selectedSeat: this.historyState.booking.seatNumber, 
+            loading: false
+        };
     }
 
     componentDidMount() {
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/find?id=${this.historyState.booking.id}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState(prevState => ({
-                    ...prevState,
-                    selectedSeat: data.seatNumber,
-                    oldBooking: data
-                }));   
-        });
         fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.booking.flightCode}`)
             .then(response => response.json())
             .then(data => {

@@ -24,7 +24,7 @@ class NewBooking extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.flightCode}`)
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.flight.flightCode}`)
             .then(response => response.json())
             .then(data => {
                 let occupiedSeats = data;
@@ -53,7 +53,7 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flightCode}&email=${this.historyState.custEmail}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?flightCode=${this.historyState.flight.flightCode}&email=${this.historyState.custEmail}`, 
             {
                 method: 'POST',
                 headers: {
@@ -88,6 +88,7 @@ class NewBooking extends Component {
     }
 
     render() {
+        let { flight } = this.historyState;
         return (
             <FadeIn transitionDuration="750">
                 <Container className="p-5" style={{ width: '45rem' }}>
@@ -99,9 +100,9 @@ class NewBooking extends Component {
                     <hr/>
                     <Row>
                         <Col>
-                            <h6 className="mb-3 mt-3">Flight code: {this.historyState.flightCode}</h6>
-                            <h6 className="mb-3"><FaPlaneDeparture/> {this.historyState.source} <BsArrowRight/> {this.historyState.destination} <FaPlaneArrival/></h6>
-                            <h5 className="mb-4">{this.historyState.departure.substr(0, 5)} <BsArrowRight/> {this.historyState.arrival.substr(0, 5)}</h5>
+                            <h6 className="mb-3 mt-3">Flight code: {flight.flightCode}</h6>
+                            <h6 className="mb-3"><FaPlaneDeparture/> {flight.source} <BsArrowRight/> {flight.destination} <FaPlaneArrival/></h6>
+                            <h5 className="mb-4">{flight.departure.substr(0, 5)} <BsArrowRight/> {flight.arrival.substr(0, 5)}</h5>
                             <hr/>
                             <Formik
                                 validationSchema={yup.object({
@@ -205,10 +206,7 @@ class NewBooking extends Component {
                                                 variant="primary" 
                                                 className="mt-3 mx-2" 
                                                 onClick={() => 
-                                                    this.props.history.push('/my-account/', {
-                                                        custName: this.historyState.custName, 
-                                                        custEmail: this.historyState.custEmail
-                                                    })
+                                                    this.props.history.push('/my-account/', this.historyState)
                                                 }
                                             >
                                                 Cancel
