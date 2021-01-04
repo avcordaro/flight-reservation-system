@@ -30,7 +30,29 @@ public class AccountController {
 		accountRepository.save(newAccount);
 		return "New account saved.";
 	}
-
+	
+	@PostMapping(path = "/edit")
+	public @ResponseBody String editAccount(@RequestParam String email, @RequestBody Account updatedAccount) {
+		
+		if(!email.equals(updatedAccount.getEmail())) {
+			List<Account> accounts = accountRepository.findByEmail(updatedAccount.getEmail());
+			if(!accounts.isEmpty()) {
+				return "Email already in use";
+			}
+		}
+		
+		Account account = accountRepository.findByEmail(email).get(0);
+		account.setFullname(updatedAccount.getFullname());
+		account.setEmail(updatedAccount.getEmail());
+		
+		if(updatedAccount.getPassword() != null) {
+			account.setPassword(updatedAccount.getPassword());
+		}
+		accountRepository.save(account);
+		
+		return "New account saved.";
+	}
+	
 	@GetMapping(path = "/find")
 	public @ResponseBody List<Account> findAccount(@RequestParam String email) {
 		
