@@ -48,7 +48,7 @@ class BookingListItem extends Component {
                         </Col>
                         <Col sm="auto">
                             <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                                <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
+                                <Button variant="danger" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
                             </OverlayTrigger>
                             <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
                                 <Button 

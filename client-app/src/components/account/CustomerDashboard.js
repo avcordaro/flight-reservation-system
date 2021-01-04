@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
@@ -33,7 +34,25 @@ class CustomerDashboard extends Component {
                 <div>
                     <Alert variant="light">
                         <div className="d-flex justify-content-end">
-                            <small><Alert.Link href="/"><FiUser/>&nbsp;My Account</Alert.Link>&nbsp;({this.historyState.custEmail})&nbsp;&nbsp;|&nbsp;&nbsp;<Alert.Link href="/">Logout&nbsp;<IoMdExit/></Alert.Link></small>
+                            <Button 
+                                variant="link" 
+                                size="sm" 
+                                onClick={
+                                    () => this.props.history.push("/my-account/details", this.historyState)
+                                }
+                            >
+                                <FiUser/>&nbsp;My Account
+                            </Button>
+                            <Button variant="link" size="sm" disabled>|</Button> 
+                            <Button 
+                                variant="link" 
+                                size="sm" 
+                                onClick={
+                                    () => this.props.history.location.push("/my-account/details", this.historyState)
+                                }
+                            >
+                                Logout&nbsp;<IoMdExit/>
+                            </Button>                       
                         </div>
                     </Alert>
                     <Container className="px-5 pb-5" style={{ width: '45rem' }}>

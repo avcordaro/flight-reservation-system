@@ -34,7 +34,7 @@ class NewBooking extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.flight.flightCode}`)
+        fetch(`https://flight-reservation-system-api.herokuapp.com/flight/occupied-seats?code=${this.historyState.flight.code}`)
             .then(response => response.json())
             .then(data => {
                 let occupiedSeats = data;
@@ -221,7 +221,7 @@ class NewBooking extends Component {
                                             >
                                                 Cancel
                                             </Button>
-                                            <Button type="submit" className="mt-3 mx-2">
+                                            <Button variant="success" type="submit" className="mt-3 mx-2">
                                                 Book {this.state.loading && <Spinner animation="border" size="sm"/>}
                                             </Button>
                                         </Form.Row>

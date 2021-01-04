@@ -42,7 +42,7 @@ class FlightListItem extends Component {
                             {this.props.type === "admin" &&
                                 <div>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Delete</Tooltip>}>
-                                        <Button variant="primary" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
+                                        <Button variant="danger" className="float-right mr-1" onClick={() => this.setState({showModal: true})}><FaTimes/></Button>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
                                         <Button 

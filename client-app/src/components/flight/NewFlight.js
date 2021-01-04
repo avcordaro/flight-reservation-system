@@ -230,7 +230,7 @@ class NewFlight extends Component {
                                             >
                                                 Cancel
                                             </Button>
-                                            <Button type="submit" className="mt-3 mx-2">
+                                            <Button variant="success" type="submit" className="mt-3 mx-2">
                                                 Create {this.state.loading && <Spinner animation="border" size="sm"/>}
                                             </Button>
                                         </Form.Row>

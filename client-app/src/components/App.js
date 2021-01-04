@@ -6,6 +6,7 @@ import AdminDashboard from './account/AdminDashboard.js';
 import CustomerDashboard from './account/CustomerDashboard.js';
 import Login from './account/Login.js';
 import Register from './account/Register.js';
+import MyAccount from './account/MyAccount.js';
 import EditBooking from './booking/EditBooking.js';
 import NewBooking from './booking/NewBooking.js';
 import EditFlight from './flight/EditFlight.js';
@@ -25,6 +26,7 @@ class App extends Component {
             { path: '/admin/new-flight', Component: NewFlight },
             { path: '/admin/edit-flight', Component: EditFlight },
             { path: '/my-account', Component: CustomerDashboard },
+            { path: '/my-account/details', Component: MyAccount },
             { path: '/my-account/new-booking', Component: NewBooking },
             { path: '/my-account/edit-booking', Component: EditBooking }
         ];  
