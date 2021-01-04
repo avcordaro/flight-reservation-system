@@ -48,7 +48,7 @@ class CustomerDashboard extends Component {
                                 variant="link" 
                                 size="sm" 
                                 onClick={
-                                    () => this.props.history.location.push("/my-account/details", this.historyState)
+                                    () => this.props.history.push("/login", this.historyState)
                                 }
                             >
                                 Logout&nbsp;<IoMdExit/>

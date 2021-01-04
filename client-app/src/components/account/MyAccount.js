@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -25,8 +26,17 @@ class MyAccount extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {loadTabs: false, account: null, passwordLoading: false, detailsLoading: false};
+        this.state = {
+            loadTabs: false, 
+            account: null,
+            passwordLoading: false, 
+            detailsLoading: false,
+            showDetailsAlert: false,
+            showPasswordAlert: false
+        };
         this.historyState = this.props.history.location.state;
+        this.handleDetailsSubmit = this.handleDetailsSubmit.bind(this);
+        this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +50,90 @@ class MyAccount extends Component {
                     loadTabs: true
             }));    
         });
+    }
+
+    handlePasswordSubmit(values, { setFieldError, setSubmitting, resetForm }) {
+        this.setState(prevState => ({
+            ...prevState,
+            passwordLoading: true
+        }));
+        if(values.oldPassword !== this.state.account.password) {
+            setFieldError("oldPassword", "Incorrect password.");
+            setSubmitting(false);
+            this.setState(prevState => ({
+                ...prevState,
+                passwordLoading: false
+            })); 
+        } else if(values.newPassword !== values.confirmNewPassword) {
+            setFieldError("confirmNewPassword", "Passwords do not match.");
+            setSubmitting(false);
+            this.setState(prevState => ({
+                ...prevState,
+                passwordLoading: false
+            })); 
+        }  else {
+            fetch(`https://flight-reservation-system-api.herokuapp.com/account/edit?email=${this.historyState.custEmail}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "fullname": this.historyState.custName,
+                        "email": this.historyState.custEmail,
+                        "password": values.newPassword
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    setSubmitting(false);
+                    resetForm();
+                    this.setState(prevState => ({
+                        ...prevState,
+                        account: {...prevState.account, password: values.newPassword},
+                        passwordLoading: false,
+                        showPasswordAlert: true
+                    })); 
+            });
+        }
+    }
+
+    handleDetailsSubmit(values, { setFieldError, setSubmitting }) {
+        this.setState(prevState => ({
+            ...prevState,
+            detailsLoading: true
+        }));
+        fetch(`https://flight-reservation-system-api.herokuapp.com/account/edit?email=${this.historyState.custEmail}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "fullname": values.name,
+                    "email": values.email
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                if(data === "Email already in use") {
+                    setFieldError("email", "Email already in use.");
+                    setSubmitting(false);
+                    this.setState(prevState => ({
+                        ...prevState,
+                        detailsLoading: false
+                    })); 
+                } else {
+                    setSubmitting(false);
+                    this.setState(prevState => ({
+                        ...prevState,
+                        account: {...prevState.account, fullname: values.name, email: values.email},
+                        detailsLoading: false,
+                        showDetailsAlert: true
+                    })); 
+                }
+            }
+        );
     }
 
     render() { 
@@ -56,7 +150,7 @@ class MyAccount extends Component {
                             variant="primary" 
                             className="mr-3" 
                             onClick={() => 
-                                this.props.history.push('/my-account', this.historyState)
+                                this.props.history.push('/my-account', {custName: this.state.account.fullname, custEmail: this.state.account.email})
                             }
                         >
                             Back
@@ -85,7 +179,7 @@ class MyAccount extends Component {
                                                     email: yup.string().email("Invalid email address.").required("Email required."),
                                                 })}
                                                 validateOnChange={false}
-                                                onSubmit={console.log}
+                                                onSubmit={this.handleDetailsSubmit}
                                                 initialValues={{
                                                     name: this.state.account.fullname,
                                                     email: this.state.account.email,
@@ -132,6 +226,16 @@ class MyAccount extends Component {
                                                                 Save Changes {this.state.detailsLoading && <Spinner animation="border" size="sm"/>}
                                                             </Button>
                                                         </Form.Row>
+                                                        <Form.Row className="justify-content-start mt-3">
+                                                            <Alert 
+                                                                variant="info" 
+                                                                show={this.state.showDetailsAlert} 
+                                                                onClose={() => this.setState(prevState => ({...prevState, showDetailsAlert: false}))} 
+                                                                dismissible
+                                                            >
+                                                                Your details has been updated successfully!
+                                                            </Alert>
+                                                        </Form.Row>
                                                     </Form>
                                                 )}
                                             </Formik>
@@ -144,7 +248,7 @@ class MyAccount extends Component {
                                                     confirmNewPassword: yup.string().required("Confirm new password required.")
                                                 })}
                                                 validateOnChange={false}
-                                                onSubmit={this.handleSubmit}
+                                                onSubmit={this.handlePasswordSubmit}
                                                 initialValues={{
                                                     oldPassword: '',
                                                     newPassword: '',
@@ -206,6 +310,16 @@ class MyAccount extends Component {
                                                                 Save Changes {this.state.passwordLoading && <Spinner animation="border" size="sm"/>}
                                                             </Button>
                                                         </Form.Row>
+                                                        <Form.Row className="justify-content-start mt-3">
+                                                            <Alert 
+                                                                variant="info" 
+                                                                show={this.state.showPasswordAlert} 
+                                                                onClose={() => this.setState(prevState => ({...prevState, showPasswordAlert: false}))} 
+                                                                dismissible
+                                                            >
+                                                                Your password has been updated successfully!
+                                                            </Alert>
+                                                        </Form.Row>
                                                     </Form>
                                                 )}
                                             </Formik>
@@ -222,3 +336,4 @@ class MyAccount extends Component {
 }
 
 export default PageLoadValidation;
+
