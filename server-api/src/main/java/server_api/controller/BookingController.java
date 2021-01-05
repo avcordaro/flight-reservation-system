@@ -61,13 +61,15 @@ public class BookingController {
 	@PostMapping(path = "/edit")
 	public @ResponseBody String editBooking(@RequestParam String id, @RequestParam String flightCode, @RequestBody Booking updatedBooking) {
 		
-		Flight flight = flightRepository.findByCode(flightCode).get(0);
-		List<Booking> bookings = bookingRepository.findByFlightAndSeatNumber(flight, updatedBooking.getSeatNumber());
-		if(!bookings.isEmpty()) {
-			return "Seat already taken";
-		}
-		
 		Booking booking = bookingRepository.findById(Integer.parseInt(id)).get();
+		
+		if(booking.getSeatNumber() != updatedBooking.getSeatNumber()) {
+			Flight flight = flightRepository.findByCode(flightCode).get(0);
+			List<Booking> bookings = bookingRepository.findByFlightAndSeatNumber(flight, updatedBooking.getSeatNumber());
+			if(!bookings.isEmpty()) {
+				return "Seat already taken";
+			}
+		}
 		
 		booking.setFirstname(updatedBooking.getFirstname());
 		booking.setLastname(updatedBooking.getLastname());

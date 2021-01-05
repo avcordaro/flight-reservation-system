@@ -68,12 +68,12 @@ class EditBooking extends Component {
         });
     }
 
-    handleSubmit(values) {
+    handleSubmit(values, { setFieldError, setSubmitting }) {
         this.setState(prevState => ({
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/edit?id=${this.historyState.booking.id}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/edit?id=${this.historyState.booking.id}&flightCode=${this.historyState.booking.flightCode}`, 
             {
                 method: 'POST',
                 headers: {
@@ -89,7 +89,16 @@ class EditBooking extends Component {
             })
             .then(response => response.text())
             .then(data => {
-                this.props.history.push('/my-account', this.historyState)
+                if(data === "Seat already taken") {
+                    setFieldError("seatNumber", "Seat has just been taken. Please select another.");
+                    setSubmitting(false);
+                    this.setState(prevState => ({
+                        ...prevState,
+                        loading: false
+                    })); 
+                } else{
+                    this.props.history.push('/my-account', this.historyState)
+                }
         });
     }
 
