@@ -28,3 +28,12 @@ Import /server-api folder as a Maven project into Eclipse.
 Run the file 'src/main/java/server_api/Application.java' with Eclipse to start the Spring server locally.
 
 Consuming backend endpoint URL's must begin with http://localhost:8080/ when running locally.
+
+#### Backend tests:
+After importing project into Eclipse, right click the folder 'src/test/java' and Run as JUnit Test. 
+
+Alternatively run the following commands from the root directory.
+```
+cd server-api/
+mvn test
+```
