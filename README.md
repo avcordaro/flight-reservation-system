@@ -7,6 +7,8 @@ A flight reservation system for the fictional airline, 'Foobar Airways', that al
 ## Deployed Version
 Deployed with Heroku at: https://flight-reservation-system.herokuapp.com/
 
+(Uses free Heroku account therefore it will take 30 seconds to initially load the page while Heroku wakes up the VM server)
+
 ## Development
 ##### Requirements:
 * Maven
