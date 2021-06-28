@@ -9,6 +9,10 @@ Deployed with Heroku at: https://flight-reservation-system.herokuapp.com/
 
 (Uses free Heroku account therefore it will take 30 seconds to initially load the page while Heroku wakes up the VM server)
 
+Demo video for a customer account:
+
+![demo](https://s6.gifyu.com/images/2021-06-28-22-47-47_Trim.gif)
+
 ## Development
 ##### Requirements:
 * Maven
