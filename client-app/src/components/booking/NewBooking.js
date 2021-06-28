@@ -63,7 +63,7 @@ class NewBooking extends Component {
             ...prevState,
             loading: true
         }));   
-        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?code=${this.historyState.flight.flightCode}&email=${this.historyState.custEmail}`, 
+        fetch(`https://flight-reservation-system-api.herokuapp.com/booking/create?code=${this.historyState.flight.code}&email=${this.historyState.custEmail}`, 
             {
                 method: 'POST',
                 headers: {
@@ -119,7 +119,7 @@ class NewBooking extends Component {
                     <hr/>
                     <Row>
                         <Col>
-                            <h6 className="mb-3 mt-3">Flight code: {flight.flightCode}</h6>
+                            <h6 className="mb-3 mt-3">Flight code: {flight.code}</h6>
                             <h6 className="mb-3"><FaPlaneDeparture/> {flight.source} <BsArrowRight/> {flight.destination} <FaPlaneArrival/></h6>
                             <h5 className="mb-4">{flight.departure.substr(0, 5)} <BsArrowRight/> {flight.arrival.substr(0, 5)}</h5>
                             <hr/>
